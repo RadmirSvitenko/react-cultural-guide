@@ -5,6 +5,7 @@ import MainLayouts from "./layouts/MainLayouts";
 import { theme } from "./theme";
 // import { store } from "./store";
 import Posts from "pages/posts/Posts";
+import PostDetailsTabs from "pages/postDetails/PostDetailsTabs";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Routes>
           <Route element={<MainLayouts />}>
             <Route path="/" element={<Posts />} />
-            <Route path="/" />
+            <Route path="/post-details" element={<PostDetailsTabs />} />
             <Route path="/" />
             <Route path="/" />
             <Route path="/" />
