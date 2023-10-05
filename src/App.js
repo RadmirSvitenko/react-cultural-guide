@@ -1,4 +1,4 @@
-import { Provider } from "react-redux";
+import Authorization from "components/Authentication/Authorization/Authorization";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import MainLayouts from "./layouts/MainLayouts";
