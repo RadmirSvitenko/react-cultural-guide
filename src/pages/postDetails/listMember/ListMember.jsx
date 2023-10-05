@@ -49,7 +49,11 @@ export default function CheckboxListSecondary() {
                 //     inputProps={{ "aria-labelledby": labelId }}
                 //   />
                 <IconButton>
-                  <MessageIcon color={"theme.palette.primary.base"} />
+                  <MessageIcon
+                    sx={{
+                      color: theme.palette.primary.base,
+                    }}
+                  />
                 </IconButton>
               }
               disablePadding

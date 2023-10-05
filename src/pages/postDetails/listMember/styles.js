@@ -5,6 +5,7 @@ import { theme } from "theme";
 export const ListMemberContainer = styled(Grid)(() => ({
   width: "100%",
   height: "auto",
+  minHeight: "100vh",
   background: theme.palette.primary.secondary,
   display: "flex",
   justifyContent: "center",
@@ -19,6 +20,7 @@ export const ListMemberCustomList = styled(List)(() => ({
 
 export const ListMemberCustomListItemText = styled(ListItemText)(() => ({
   fontFamily: theme.fonts.Nunito,
-  color: "#fff",
+  color: theme.palette.primary.base,
   fontWeight: "600",
+  textAlign: "center",
 }));
