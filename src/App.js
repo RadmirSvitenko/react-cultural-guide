@@ -1,30 +1,14 @@
-import { Provider } from "react-redux";
+import Authorization from "components/Authentication/Authorization/Authorization";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
-import MainLayouts from "./layouts/MainLayouts";
-import { theme } from "./theme";
-import { store } from "./store";
-import { CssBaseline } from "@mui/material";
 
 function App() {
   return (
     <>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <BrowserRouter>
-            <Routes>
-              <Route element={<MainLayouts />}>
-                <Route path="/" />
-                <Route path="/" />
-                <Route path="/" />
-                <Route path="/" />
-                <Route path="/" />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </ThemeProvider>
-      </Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/authorization" element={<Authorization />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
