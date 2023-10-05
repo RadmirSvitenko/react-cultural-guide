@@ -3,28 +3,23 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import MainLayouts from "./layouts/MainLayouts";
 import { theme } from "./theme";
-import { store } from "./store";
-import { CssBaseline } from "@mui/material";
+// import { store } from "./store";
+import Posts from "pages/posts/Posts";
 
 function App() {
   return (
     <>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <BrowserRouter>
-            <Routes>
-              <Route element={<MainLayouts />}>
-                <Route path="/" />
-                <Route path="/" />
-                <Route path="/" />
-                <Route path="/" />
-                <Route path="/" />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </ThemeProvider>
-      </Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<MainLayouts />}>
+            <Route path="/" element={<Posts />} />
+            <Route path="/" />
+            <Route path="/" />
+            <Route path="/" />
+            <Route path="/" />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
