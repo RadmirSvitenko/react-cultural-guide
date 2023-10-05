@@ -12,14 +12,16 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/authorization" element={<Authorization />} />
+        </Routes>
+
+        <Routes>
           <Route element={<MainLayouts />}>
             <Route path="/" element={<Posts />} />
             <Route path="/post-details" element={<PostDetailsTabs />} />
-            <Route path="/" />
-            <Route path="/" />
-            <Route path="/" />
           </Route>
         </Routes>
+        <Routes></Routes>
       </BrowserRouter>
     </>
   );
