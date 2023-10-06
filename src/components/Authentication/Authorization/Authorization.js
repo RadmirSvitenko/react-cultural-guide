@@ -1,24 +1,27 @@
-import {
-  Box,
-  Button,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, InputAdornment, TextField, Typography } from "@mui/material";
 import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
 import VpnKeyTwoToneIcon from "@mui/icons-material/VpnKeyTwoTone";
 import React, { useState } from "react";
 import {
-  AuthorizatTitle,
   AuthorizationBox,
   AuthorizationButton,
   AuthorizationPaper,
+  AuthorizationTitle,
+  LinkText,
 } from "./styles";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authSelectors, loginAsync } from "./AuthorizationSlice";
 
 export default function Authorization() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const isLoading = useSelector(authSelectors.isLoading);
+
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email: "user@mail.com",
+    password: "begemot2505",
   });
 
   const handleChange = (e) => {
@@ -28,15 +31,27 @@ export default function Authorization() {
       [name]: value,
     }));
   };
+  const handleNavigateToRegistration = () => {
+    navigate("/registration-user");
+  };
+  const login = async () => {
+    try {
+      await dispatch(loginAsync(user));
+      navigate("/");
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
   return (
     <AuthorizationBox>
       <AuthorizationPaper elevation={20}>
-        <AuthorizatTitle>Login</AuthorizatTitle>
+        <AuthorizationTitle>Авторизация </AuthorizationTitle>
         <TextField
           required
           name="email"
           type="email"
-          label="Email"
+          label="Электронная почта"
           value={user.email}
           autoComplete="on"
           onChange={handleChange}
@@ -52,7 +67,7 @@ export default function Authorization() {
           required
           name="password"
           type="password"
-          label="Password"
+          label="Пароль"
           value={user.password}
           autoComplete="on"
           onChange={handleChange}
@@ -64,10 +79,17 @@ export default function Authorization() {
             ),
           }}
         />
-        <AuthorizationButton variant="contained">Login</AuthorizationButton>
-        <Typography sx={{ color: "gray", fontSize: "15px" }}>
-          Not a member? <Button variant="text">Sign Up</Button>
-        </Typography>
+        <AuthorizationButton variant="contained" onClick={login}>
+          Login
+        </AuthorizationButton>
+        <Box>
+          <Typography sx={{ color: "gray", fontSize: "15px" }}>
+            Не зарегестрированы?
+          </Typography>
+          <LinkText onClick={handleNavigateToRegistration}>
+            Регистрация
+          </LinkText>
+        </Box>
       </AuthorizationPaper>
     </AuthorizationBox>
   );
