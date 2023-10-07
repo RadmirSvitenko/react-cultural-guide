@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   PostBoxButtonBox,
   PostBoxContent,
@@ -35,7 +35,8 @@ import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRound
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostsList } from "reducers/postsSlice";
-import { Box } from "@mui/system";
+import { Navigate, useNavigate } from "react-router-dom";
+import { theme } from "theme";
 
 const Posts = () => {
   const [favoriteIcon, setFavoriteIcon] = useState(false);
@@ -43,6 +44,7 @@ const Posts = () => {
   const [isViewPost, setIsViewPost] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChangeIconFavorite = () => setFavoriteIcon((show) => !show);
   const handleChangeIconArrow = () => setArrowIcon((show) => !show);
@@ -54,8 +56,12 @@ const Posts = () => {
   const posts = useSelector((state) => state.posts.postsList);
   console.log("posts: ", posts);
 
-  const getPosts = async () => {
-    await dispatch(getPostsList());
+  const getPosts = useCallback(async () => {
+    dispatch(getPostsList());
+  }, []);
+
+  const toDetailsPost = (post) => {
+    navigate(`/${post.id}`);
   };
 
   useEffect(() => {
@@ -86,15 +92,20 @@ const Posts = () => {
                   <Rating value={5} />
                   <IconButton onClick={handleChangeIconFavorite}>
                     {favoriteIcon ? (
-                      <FavoriteRoundedIcon color="warning" />
+                      <FavoriteRoundedIcon color="error" />
                     ) : (
-                      <FavoriteBorderRoundedIcon color="warning" />
+                      <FavoriteBorderRoundedIcon color="error" />
                     )}
                   </IconButton>
 
                   <PostBoxRatingTitle>
                     <IconButton>
-                      <RemoveRedEyeIcon fontSize="small" />
+                      <RemoveRedEyeIcon
+                        fontSize="small"
+                        sx={{
+                          color: "#fff",
+                        }}
+                      />
                     </IconButton>
                     {post.views}
                   </PostBoxRatingTitle>
@@ -105,14 +116,14 @@ const Posts = () => {
                       <KeyboardArrowUpRoundedIcon
                         fontSize="large"
                         sx={{
-                          color: "#000",
+                          color: "#fff",
                         }}
                       />
                     ) : (
                       <KeyboardArrowDownRoundedIcon
                         fontSize="large"
                         sx={{
-                          color: "#000",
+                          color: "#fff",
                         }}
                       />
                     )}
@@ -136,7 +147,11 @@ const Posts = () => {
                       <Button variant="contained" color="success">
                         Я пойду!
                       </Button>
-                      <Button variant="contained" color="warning">
+                      <Button
+                        variant="contained"
+                        color="warning"
+                        onClick={() => toDetailsPost(post)}
+                      >
                         Подробнее
                       </Button>
                     </PostCollapseContentBox>

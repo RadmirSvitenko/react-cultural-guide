@@ -7,12 +7,14 @@ import PostDetails from "pages/postDetails/PostDetails";
 import { Provider } from "react-redux";
 import store from "store";
 import { theme } from "theme";
+import { CssBaseline } from "@mui/material";
 
 function App() {
   return (
     <>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <BrowserRouter>
             <Routes>
               <Route path="/authorization" element={<Authorization />} />
@@ -21,7 +23,7 @@ function App() {
             <Routes>
               <Route element={<MainLayouts />}>
                 <Route path="/" element={<Posts />} />
-                <Route path="/post-details" element={<PostDetails />} />
+                <Route path="/:id" element={<PostDetails />} />
               </Route>
             </Routes>
             <Routes></Routes>

@@ -25,6 +25,7 @@ export const PostDetailsMapBox = styled(Grid)(() => ({
 
 export const PostDetailsMap = styled(Grid)(() => ({
   width: "500px",
+  maxWidth: "500px",
   height: "500px",
   display: "flex",
   margin: "50px 0px",
@@ -33,22 +34,96 @@ export const PostDetailsMap = styled(Grid)(() => ({
   background: `url("https://willfaulkner.com/wp-content/uploads/2020/09/The-best-photography-locations-in-the-world-featured-image.jpg")`,
 }));
 
-export const PostDetailsContentBox = styled(Grid)(() => ({
-  width: "50%",
-  height: "auto",
+export const PostDetailsBox = styled(Grid)(() => ({
+  width: "500px",
+  height: "500px",
   display: "flex",
-  justifyContent: "center",
+  flexDirection: "column",
+  flexWrap: "wrap",
+  justifyContent: "space-around",
   alignItems: "center",
-  minWidth: "500px",
-  minHeight: "500px",
   padding: "20px",
-  outline: "2px solid #000",
-  borderRadius: "25px",
   margin: "50px 0px",
-  background: "#303030",
+  outline: "3px solid #ef6c00",
+  borderRadius: "25px",
+  background: "#101010",
 }));
 
-export const ContentBoxEventDescription = styled(Box)(() => ({
+export const PostDetailsTitle = styled(Box)(() => ({
+  fontFamily: theme.fonts.Nunito,
+  fontWeight: "bold",
+  fontSize: "24px",
+  color: "#fff",
+  textTransform: "uppercase",
+  letterSpacing: "2px",
+}));
+
+export const PostDetailsTime = styled(Box)(() => ({
+  fontFamily: theme.fonts.Nunito,
+  fontWeight: "bold",
+  fontSize: "20px",
+  color: "#fff",
+}));
+
+export const PostDetailsTitleBox = styled(Box)(() => ({
+  width: "100%",
+  height: "10%",
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "center",
+}));
+
+export const PostDetailsDescriptionBox = styled(Box)(() => ({
+  width: "100%",
+  height: "50%",
+  display: "flex",
+  justifyContent: "space-around",
+  outline: "3px solid #ef6c00",
+  borderRadius: "25px",
+  padding: "10px",
+}));
+
+export const PostDetailsTimeBox = styled(Box)(() => ({
+  width: "100%",
+  height: "10%",
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "center",
+}));
+
+export const PostDetailsFunctionBox = styled(Box)(() => ({
+  width: "100%",
+  height: "10%",
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "center",
+}));
+
+export const PostDetailsInfoBox = styled(Box)(() => ({
+  width: "100%",
+  height: "10%",
+  display: "flex",
+  flexWrap: "wrap",
+  flexDirection: "column",
+  justifyContent: "space-evenly",
+  alignItems: "center",
+}));
+
+export const PostDetailsInfo = styled(Box)(() => ({
+  color: theme.palette.primary.base,
+  fontFamily: theme.fonts.Nunito,
+  fontSize: "16px",
+  fontWeight: "700",
+}));
+
+export const PostDetailsFunction = styled(Box)(() => ({
+  color: theme.palette.primary.base,
+  fontFamily: theme.fonts.Nunito,
+  fontSize: "40px",
+  fontWeight: "700",
+}));
+
+export const PostDetailsDescription = styled(Box)(() => ({
   color: theme.palette.primary.base,
   fontFamily: theme.fonts.Nunito,
   fontSize: "40px",

@@ -12,25 +12,60 @@ import "./styles.css";
 
 import { EffectCoverflow, Pagination } from "swiper/modules";
 import {
-  ContentBoxEventDescription,
   ListMemberCustomList,
   ListMemberCustomListItemText,
+  PostDetailsBox,
   PostDetailsContainer,
-  PostDetailsContentBox,
+  PostDetailsDescription,
+  PostDetailsDescriptionBox,
+  PostDetailsFunctionBox,
+  PostDetailsInfo,
+  PostDetailsInfoBox,
   PostDetailsListBox,
   PostDetailsMap,
-  PostDetailsSliderBox,
+  PostDetailsTime,
+  PostDetailsTimeBox,
+  PostDetailsTitle,
+  PostDetailsTitleBox,
 } from "./styles";
 
-import { IconButton, Typography } from "@mui/material";
+import { Button, IconButton, Rating } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
 import { theme } from "theme";
 import { Box } from "@mui/system";
+import { useDispatch, useSelector } from "react-redux";
+import { getPostDetails } from "reducers/postDetailsSlice";
+import { useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 
 export default function CheckboxListSecondary() {
+  const [currentTime, setCurrentTime] = useState();
+  const post = useSelector((state) => state.post.post);
+
+  const date = new Date();
+
+  // setInterval(() => {
+  //   const time = date.toLocaleTimeString();
+  //   setCurrentTime(time);
+  // }, 1000);
+
+  const time = date.toLocaleTimeString();
+
+  const dispatch = useDispatch();
+
+  const { id } = useParams();
+
+  const getPost = useCallback(async () => {
+    dispatch(getPostDetails(`${id}`));
+  }, []);
+
+  useEffect(() => {
+    getPost();
+  }, [getPost]);
+
   return (
     <PostDetailsContainer>
-      <PostDetailsSliderBox>
+      {/* <PostDetailsSliderBox>
         <Swiper
           loop
           autoplay={{
@@ -106,14 +141,48 @@ export default function CheckboxListSecondary() {
             />
           </SwiperSlide>
         </Swiper>
-      </PostDetailsSliderBox>
+      </PostDetailsSliderBox> */}
 
       <Box width={"100%"} display={"flex"} justifyContent={"space-evenly"}>
-        <PostDetailsContentBox>
-          <ContentBoxEventDescription>
-            Event Description
-          </ContentBoxEventDescription>
-        </PostDetailsContentBox>
+        <PostDetailsBox>
+          <PostDetailsTitleBox>
+            <PostDetailsTitle>{post.title}</PostDetailsTitle>
+            <PostDetailsTitle>{time}</PostDetailsTitle>
+          </PostDetailsTitleBox>
+
+          <PostDetailsDescriptionBox>
+            <PostDetailsDescription>{post.description}</PostDetailsDescription>
+          </PostDetailsDescriptionBox>
+
+          <PostDetailsTimeBox>
+            <PostDetailsTime>{post.date}</PostDetailsTime>
+            <PostDetailsTime>{post.time_start}</PostDetailsTime>
+            <PostDetailsTime>{post.time_end}</PostDetailsTime>
+          </PostDetailsTimeBox>
+
+          <PostDetailsInfoBox>
+            <PostDetailsInfo>Организатор: {post.organizer}</PostDetailsInfo>
+            <PostDetailsInfo>
+              Где пройдёт: {post.geolocation_name}
+            </PostDetailsInfo>
+          </PostDetailsInfoBox>
+
+          <PostDetailsInfoBox>
+            <Rating value={5} />
+            <PostDetailsInfo>Значимость: {post.priority}</PostDetailsInfo>
+            <PostDetailsInfo>Цена: {post.price} сом</PostDetailsInfo>
+          </PostDetailsInfoBox>
+
+          <PostDetailsFunctionBox>
+            <Button variant="contained" color="success">
+              Я пойду!
+            </Button>
+
+            <Button variant="contained" color="warning">
+              Добавить в избранное
+            </Button>
+          </PostDetailsFunctionBox>
+        </PostDetailsBox>
 
         <PostDetailsMap></PostDetailsMap>
       </Box>
@@ -161,7 +230,7 @@ export default function CheckboxListSecondary() {
 
                   <ListMemberCustomListItemText
                     id={labelId}
-                    primary={`Event ${value + 1}`}
+                    primary={post.title}
                   />
                 </ListItemButton>
               </ListItem>
