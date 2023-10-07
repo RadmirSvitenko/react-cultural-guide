@@ -41,6 +41,7 @@ import { useCallback, useEffect, useState } from "react";
 export default function CheckboxListSecondary() {
   const [currentTime, setCurrentTime] = useState();
   const post = useSelector((state) => state.post.post);
+  console.log("post: ", post);
 
   const date = new Date();
 
