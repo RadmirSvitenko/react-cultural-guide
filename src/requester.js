@@ -1,5 +1,25 @@
 import axios from "axios";
+import { getTokenFromCookies } from "cookies";
 
-export const API_CULTURAL_GUIDE = axios.create({
+const API = axios.create({
   baseURL: "http://64.227.134.242:5001/",
 });
+
+export default API;
+
+API.interceptors.request.use(
+  function (config) {
+    const customConfig = config;
+    const token = getTokenFromCookies();
+
+    if (token) {
+      customConfig.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return customConfig;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
