@@ -6,7 +6,6 @@ import {
 import RegistrationCompany from "components/Authentication/RegistrationCompany/RegistrationCompany";
 import RegistrationUser from "components/Authentication/RegistrationUser/RegistrationUser";
 import { getTokenFromCookies } from "cookies";
-import Main from "page/MainPage/Main";
 import { AuthProvider } from "providers/authProvider/AuthProvider";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,17 +34,23 @@ function App() {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <BrowserRouter>
+          <AuthProvider>
             <Routes>
               <Route element={<MainLayouts />}>
                 <Route path="/" element={<Posts />} />
                 <Route path="/:id" element={<PostDetails />} />
               </Route>
+              <Route path="/authorization" element={<Authorization />} />
+              <Route path="/registration-user" element={<RegistrationUser />} />
+              <Route
+                path="/registration-company"
+                element={<RegistrationCompany />}
+              />
             </Routes>
-          </BrowserRouter>
+          </AuthProvider>
         </ThemeProvider>
       </Provider>
-
+      {/* 
       <AuthProvider>
         <Routes>
           <Route path="/authorization" element={<Authorization />} />
@@ -54,9 +59,8 @@ function App() {
             path="/registration-company"
             element={<RegistrationCompany />}
           />
-          <Route path="/" element={<Main />} />
         </Routes>
-      </AuthProvider>
+      </AuthProvider> */}
     </>
   );
 }

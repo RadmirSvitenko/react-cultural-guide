@@ -3,7 +3,7 @@ import postDetailsSliceReducer from "reducers/postDetailsSlice";
 import postsSliceReducer from "reducers/postsSlice";
 import authReducer from "./components/Authentication/Authorization/AuthorizationSlice";
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     posts: postsSliceReducer,
     post: postDetailsSliceReducer,

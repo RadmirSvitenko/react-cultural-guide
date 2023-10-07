@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_CULTURAL_GUIDE } from "requester";
+import API from "requester";
 
 const initialState = {
   post: {},
@@ -9,7 +9,7 @@ const initialState = {
 export const getPostDetails = createAsyncThunk(
   "getPostDetails/get",
   async (id) => {
-    const response = await API_CULTURAL_GUIDE.get(`ev/events/${id}`);
+    const response = await API.get(`ev/events/${id}`);
     return response.data;
   }
 );
