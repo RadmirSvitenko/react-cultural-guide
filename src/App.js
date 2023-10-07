@@ -2,27 +2,34 @@ import Authorization from "components/Authentication/Authorization/Authorization
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import MainLayouts from "./layouts/MainLayouts";
-import { theme } from "./theme";
-// import { store } from "./store";
 import Posts from "pages/posts/Posts";
-import PostDetailsTabs from "pages/postDetails/PostDetailsTabs";
+import PostDetails from "pages/postDetails/PostDetails";
+import { Provider } from "react-redux";
+import store from "store";
+import { theme } from "theme";
+import { CssBaseline } from "@mui/material";
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/authorization" element={<Authorization />} />
-        </Routes>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/authorization" element={<Authorization />} />
+            </Routes>
 
-        <Routes>
-          <Route element={<MainLayouts />}>
-            <Route path="/" element={<Posts />} />
-            <Route path="/post-details" element={<PostDetailsTabs />} />
-          </Route>
-        </Routes>
-        <Routes></Routes>
-      </BrowserRouter>
+            <Routes>
+              <Route element={<MainLayouts />}>
+                <Route path="/" element={<Posts />} />
+                <Route path="/:id" element={<PostDetails />} />
+              </Route>
+            </Routes>
+            <Routes></Routes>
+          </BrowserRouter>
+        </ThemeProvider>
+      </Provider>
     </>
   );
 }
