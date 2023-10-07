@@ -10,14 +10,13 @@ import { AuthProvider } from "providers/authProvider/AuthProvider";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
 import MainLayouts from "./layouts/MainLayouts";
 import Posts from "pages/posts/Posts";
 import PostDetails from "pages/postDetails/PostDetails";
 import { Provider } from "react-redux";
 import store from "store";
 import { theme } from "theme";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 function App() {
   const user = useSelector(authSelectors.user);
