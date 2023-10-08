@@ -23,12 +23,18 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Favorite from "./Favorite/Favorite";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [selectedLang, setSelectedLang] = useState("ru");
   const [openMenu, setOpenMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const navigate = useNavigate();
+
+  const handleNavigateProfile = () => {
+    navigate("/profile");
+  };
   const { t, i18n } = useTranslation();
 
   const toggleMenu = () => {
@@ -88,7 +94,7 @@ const Header = () => {
               <FavoriteIcon />
             </Badge>
           </IconButton>
-          <IconButton>
+          <IconButton onClick={handleNavigateProfile}>
             <AccountCircleIcon sx={{ color: "white" }} />
           </IconButton>
           <IconButton>

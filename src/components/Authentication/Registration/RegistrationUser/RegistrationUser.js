@@ -49,7 +49,6 @@ const RegistrationUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Проверка на заполнение всех обязательных полей
     if (
       !user.username ||
       !user.email ||
@@ -69,12 +68,10 @@ const RegistrationUser = () => {
     try {
       await dispatch(
         userRegisterAsync({
-          user: {
-            username: user.username,
-            email: user.email,
-            password: user.password,
-            confirm_password: user.confirm_password,
-          },
+          username: user.username,
+          email: user.email,
+          password: user.password,
+          confirm_password: user.confirm_password,
         })
       );
 

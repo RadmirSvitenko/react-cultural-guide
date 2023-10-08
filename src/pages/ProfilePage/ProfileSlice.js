@@ -12,18 +12,18 @@ export const getUserDetails = createAsyncThunk("userDetails", async () => {
   return profile;
 });
 
-// export const updateUserDetails = createAsyncThunk(
-//   "userData/updateUserDetails",
-//   async (updatedUserData) => {
-//     try {
-//       const response = await API.put(`/profile/`, updatedUserData);
-//       const data = response.data;
-//       return data;
-//     } catch (error) {
-//       throw new Error("Ошибка обновления пользователя: " + error.message);
-//     }
-//   }
-// );
+export const updateUserDetails = createAsyncThunk(
+  "userData/updateUserDetails",
+  async (updatedUserData) => {
+    try {
+      const response = await API.put(`/profile/`, updatedUserData);
+      const data = response.data;
+      return data;
+    } catch (error) {
+      throw new Error("Ошибка обновления пользователя: " + error.message);
+    }
+  }
+);
 
 const userProfileSlice = createSlice({
   name: "userData",
@@ -41,10 +41,10 @@ const userProfileSlice = createSlice({
       .addCase(getUserDetails.fulfilled, (state, action) => {
         state.isLoading = false;
         state.currentUser = action.payload;
+      })
+      .addCase(updateUserDetails.fulfilled, (state, action) => {
+        state.currentUser = { ...state.currentUser, ...action.payload };
       });
-    // .addCase(updateUserDetails.fulfilled, (state, action) => {
-    //   state.currentUser = { ...state.currentUser, ...action.payload };
-    // });
   },
 });
 

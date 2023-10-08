@@ -67,7 +67,10 @@ export default function Profile() {
         <ProfileDisplayBox>
           <Box sx={{ width: "50%" }}>
             <img
-              src={currentUser.photo}
+              src={
+                currentUser.photo ||
+                "https://www.roiconnect.ca/wp-content/uploads/2021/07/DefaultAvatar.png"
+              }
               style={{
                 maxWidth: "100%",
                 height: "100%",
