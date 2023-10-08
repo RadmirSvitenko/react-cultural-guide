@@ -57,11 +57,7 @@ export default function CheckboxListSecondary() {
 
   const date = new Date();
 
-  // setInterval(() => {
-  //   const time = date.toLocaleTimeString();
-  //   setCurrentTime(time);
-  // }, 1000);
-
+  // const time = setInterval(date.toLocaleTimeString(), 1000);
   const time = date.toLocaleTimeString();
 
   const dispatch = useDispatch();
@@ -307,6 +303,26 @@ export default function CheckboxListSecondary() {
               <ListItemAvatar>
                 <Avatar alt={`Avatar `} src={`/static/images/avatar.jpg`} />
               </ListItemAvatar>
+
+              <ListMemberCustomListItemText
+                primary={`Название: ${post.title}`}
+              />
+
+              <ListMemberCustomListItemText
+                primary={`Название: ${post.title}`}
+              />
+
+              <ListMemberCustomListItemText
+                primary={`Название: ${post.title}`}
+              />
+
+              <ListMemberCustomListItemText
+                primary={`Название: ${post.title}`}
+              />
+
+              <ListMemberCustomListItemText
+                primary={`Название: ${post.title}`}
+              />
 
               <ListMemberCustomListItemText
                 primary={`Название: ${post.title}`}

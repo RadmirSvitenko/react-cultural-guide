@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { theme } from "theme";
 
 export const HeaderAppBar = styled(AppBar)(() => ({
   width: "100%",
@@ -34,6 +35,9 @@ export const LogoText = styled(Typography)(() => ({
   color: "white",
   fontSize: "15px",
   fontWeight: 500,
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
 }));
 
 export const NavMenu = styled("nav")(() => ({
@@ -64,4 +68,10 @@ export const ModalCustomDialogContent = styled(DialogContent)(() => ({
   alignItems: "center",
   flexDirection: "column",
   width: "100%",
+}));
+
+export const CustomNavLink = styled(NavLink)(() => ({
+  [theme.breakpoints.down("lg")]: {
+    display: "none",
+  },
 }));

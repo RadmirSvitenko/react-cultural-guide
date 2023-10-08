@@ -11,9 +11,14 @@ import {
 import { Box } from "@mui/system";
 import { ModalCustomDialogContent } from "components/Header/styles";
 import React, { useState } from "react";
-import { AddEventCustomTextField, ModalAddEventFieldBox } from "./styles";
+import {
+  AddEventCustomTextField,
+  ModalAddEventFieldBox,
+  ModalAddEventTitle,
+} from "./styles";
 import { useDispatch } from "react-redux";
 import { addPost } from "reducers/postsSlice";
+import { theme } from "theme";
 
 const AddEvent = ({ open, onClose }) => {
   const [titlePost, setTitlePost] = useState("");
@@ -69,19 +74,20 @@ const AddEvent = ({ open, onClose }) => {
       onClose={onClose}
       TransitionComponent={Slide}
       keepMounted
-      maxWidth={"800px"}
+      maxWidth={"sm" ? "800px" : "300px"}
       sx={{
         zIndex: "3000",
       }}
     >
       <DialogTitle>
         <Grid width={"100%"} display={"flex"} justifyContent={"space-between"}>
-          <Box>Добавить мероприятие</Box>
+          <ModalAddEventTitle>Добавить мероприятие</ModalAddEventTitle>
         </Grid>
 
         <ModalAddEventFieldBox>
           <form onSubmit={handleAddEventSubmit}>
             <AddEventCustomTextField
+              margin="dense"
               variant="outlined"
               label="Название мероприятия"
               value={titlePost}
@@ -89,6 +95,7 @@ const AddEvent = ({ open, onClose }) => {
             />
 
             <AddEventCustomTextField
+              margin="dense"
               variant="outlined"
               label="Категория(1,2,3,4)"
               type="number"
@@ -97,6 +104,7 @@ const AddEvent = ({ open, onClose }) => {
             />
 
             <AddEventCustomTextField
+              margin="dense"
               variant="outlined"
               label="Описание"
               value={descriptionPost}
@@ -104,6 +112,7 @@ const AddEvent = ({ open, onClose }) => {
             />
 
             <AddEventCustomTextField
+              margin="dense"
               variant="outlined"
               label="Цена"
               value={pricePost}
@@ -112,12 +121,14 @@ const AddEvent = ({ open, onClose }) => {
             />
 
             <AddEventCustomTextField
+              margin="dense"
               value={datePost}
               type="date"
               onChange={handleChangeFieldDate}
             />
 
             <AddEventCustomTextField
+              margin="dense"
               variant="outlined"
               label="Когда начинается"
               value={timeStartPost}
@@ -125,6 +136,7 @@ const AddEvent = ({ open, onClose }) => {
             />
 
             <AddEventCustomTextField
+              margin="dense"
               variant="outlined"
               label="Когда заканчивается"
               value={timeEndPost}
@@ -132,6 +144,7 @@ const AddEvent = ({ open, onClose }) => {
             />
 
             <AddEventCustomTextField
+              margin="dense"
               variant="outlined"
               label="Значимость(low/high)"
               value={priorityPost}
@@ -139,6 +152,7 @@ const AddEvent = ({ open, onClose }) => {
             />
 
             <AddEventCustomTextField
+              margin="dense"
               variant="outlined"
               label="Место проведения"
               value={geolocationName}
@@ -146,6 +160,7 @@ const AddEvent = ({ open, onClose }) => {
             />
 
             <AddEventCustomTextField
+              margin="dense"
               variant="outlined"
               label="Организатор"
               value={organizerPost}
@@ -163,7 +178,17 @@ const AddEvent = ({ open, onClose }) => {
               </Select>
             </Box> */}
 
-            <Button type="submit" fullWidth variant="contained">
+            <Button
+              sx={{
+                [theme.breakpoints.down("sm")]: {
+                  width: "200px",
+                  margin: "30px 0px",
+                },
+              }}
+              type="submit"
+              fullWidth
+              variant="contained"
+            >
               Добавить
             </Button>
           </form>

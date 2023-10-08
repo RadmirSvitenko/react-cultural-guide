@@ -49,13 +49,16 @@ export const PostsPageAllPostsBox = styled(Grid)(() => ({
 export const PostsPagePostBox = styled(Box)(() => ({
   width: "330px",
   height: "auto",
-  minHeight: "500px",
   display: "flex",
   flexDirection: "column",
   outline: "3px solid #ef6c00",
   borderRadius: "25px",
   padding: "15px",
   background: "#101010",
+  [theme.breakpoints.down("sm")]: {
+    height: "700px",
+    paddingBottom: "50px",
+  },
 }));
 
 export const PostBoxTitleBox = styled(Box)(() => ({
@@ -106,6 +109,9 @@ export const PostBoxContentBox = styled(Box)(() => ({
   outline: "1px solid #ef6c00",
   borderRadius: "15px",
   margin: "50px 0px",
+  [theme.breakpoints.down("sm")]: {
+    margin: "100px 0px",
+  },
 }));
 
 export const PostBoxContent = styled(List)(() => ({
@@ -150,9 +156,11 @@ export const PostCollapseContentBox = styled(Grid)(() => ({
   width: "100%",
   justifyContent: "space-around",
   alignItems: "center",
+  flexWrap: "wrap",
+  flexDirection: "column",
 }));
 
-export const PostCollapseTitle = styled(Grid)(() => ({
+export const PostCollapseTitle = styled(Box)(() => ({
   fontFamily: theme.fonts.Nunito,
   fontSize: "18px",
   fontWeight: "800",

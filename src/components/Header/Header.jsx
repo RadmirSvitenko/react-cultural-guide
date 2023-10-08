@@ -7,6 +7,7 @@ import {
   NavMenu,
   SearchBar,
   NavLink,
+  CustomNavLink,
 } from "./styles";
 import {
   Badge,
@@ -24,6 +25,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Favorite from "components/Favorite/Favorite";
 import AddEvent from "components/AddEvent/AddEvent";
+import { display } from "@mui/system";
+import { theme } from "theme";
 
 const Header = () => {
   const [openModalFavorite, setOpenModalFavorite] = useState(false);
@@ -64,8 +67,8 @@ const Header = () => {
         </MenuButton>
         <LogoText variant="h6">{t("toGo")}</LogoText>
         <NavMenu>
-          <NavLink>{t("aboutUs")}</NavLink>
-          <NavLink>{t("contacts")}</NavLink>
+          <CustomNavLink>{t("aboutUs")}</CustomNavLink>
+          <CustomNavLink>{t("contacts")}</CustomNavLink>
         </NavMenu>
 
         <SearchBar
@@ -76,6 +79,11 @@ const Header = () => {
               <Search />
             </InputAdornment>
           }
+          sx={{
+            [theme.breakpoints.down("md")]: {
+              width: "200px",
+            },
+          }}
           placeholder={t("search")}
         />
         <Box display={"flex"} justifyContent={"space-evenly"}>

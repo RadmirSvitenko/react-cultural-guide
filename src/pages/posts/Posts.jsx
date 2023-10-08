@@ -129,10 +129,15 @@ const Posts = () => {
                     </PostCollapseContentBox>
 
                     <PostCollapseContentBox>
-                      <Button variant="contained" color="success">
+                      <Button
+                        sx={{ margin: "5px 0px" }}
+                        variant="contained"
+                        color="success"
+                      >
                         Я пойду!
                       </Button>
                       <Button
+                        sx={{ margin: "5px 0px" }}
                         variant="contained"
                         color="warning"
                         onClick={() => toDetailsPost(post)}
