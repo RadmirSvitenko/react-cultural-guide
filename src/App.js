@@ -3,13 +3,13 @@ import {
   authSelectors,
   getUserAsync,
 } from "components/Authentication/Authorization/AuthorizationSlice";
-import RegistrationCompany from "components/Authentication/RegistrationCompany/RegistrationCompany";
-import RegistrationUser from "components/Authentication/RegistrationUser/RegistrationUser";
+import RegistrationCompany from "components/Authentication/Registration/RegistrationCompany/RegistrationCompany";
+import RegistrationUser from "components/Authentication/Registration/RegistrationUser/RegistrationUser";
 import { getTokenFromCookies } from "cookies";
 import { AuthProvider } from "providers/authProvider/AuthProvider";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import MainLayouts from "./layouts/MainLayouts";
 import Posts from "pages/posts/Posts";
 import PostDetails from "pages/postDetails/PostDetails";
@@ -35,31 +35,20 @@ function App() {
           <CssBaseline />
           <AuthProvider>
             <Routes>
-              <Route element={<MainLayouts />}>
-                <Route path="/" element={<Posts />} />
-                <Route path="/:id" element={<PostDetails />} />
-              </Route>
               <Route path="/authorization" element={<Authorization />} />
               <Route path="/registration-user" element={<RegistrationUser />} />
               <Route
                 path="/registration-company"
                 element={<RegistrationCompany />}
               />
+              <Route element={<MainLayouts />}>
+                <Route path="/" element={<Posts />} />
+                <Route path="/:id" element={<PostDetails />} />
+              </Route>
             </Routes>
           </AuthProvider>
         </ThemeProvider>
       </Provider>
-      {/* 
-      <AuthProvider>
-        <Routes>
-          <Route path="/authorization" element={<Authorization />} />
-          <Route path="/registration-user" element={<RegistrationUser />} />
-          <Route
-            path="/registration-company"
-            element={<RegistrationCompany />}
-          />
-        </Routes>
-      </AuthProvider> */}
     </>
   );
 }

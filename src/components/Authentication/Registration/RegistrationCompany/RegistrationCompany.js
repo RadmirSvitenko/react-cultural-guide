@@ -1,6 +1,9 @@
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { AuthorizationBox, AuthorizationTitle } from "../Authorization/styles";
+import {
+  AuthorizationBox,
+  AuthorizationTitle,
+} from "../../Authorization/styles";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
 import VisibilityOffTwoToneIcon from "@mui/icons-material/VisibilityOffTwoTone";
 import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
