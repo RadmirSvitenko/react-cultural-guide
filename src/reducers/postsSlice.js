@@ -11,6 +11,27 @@ export const getPostsList = createAsyncThunk("getPostsList/get", async () => {
   return response.data;
 });
 
+export const addPost = createAsyncThunk("addPostsList/post", async (params) => {
+  const response = await API.post("ev/events/", {
+    title: params.title,
+    category: params.category,
+    description: params.description,
+    price: params.price,
+    date: params.date,
+    time_start: params.time_start,
+    time_end: params.time_end,
+    priority: params.priority,
+    geolocation_name: params.geolocation_name,
+    organizer: params.organizer,
+
+    multi: true,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+});
+
 const postsSlice = createSlice({
   name: "postsSlice",
   initialState,

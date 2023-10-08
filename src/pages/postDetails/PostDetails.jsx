@@ -31,17 +31,29 @@ import {
 
 import { Button, IconButton, Rating } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { theme } from "theme";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostDetails } from "reducers/postDetailsSlice";
+import {
+  getMeetingDetails,
+  getPostDetails,
+  postMeetingDetails,
+} from "reducers/postDetailsSlice";
 import { useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
+import { title } from "process";
+import { async } from "q";
+import { getFavoriteList, postFavoriteList } from "reducers/favoriteSlice";
 
 export default function CheckboxListSecondary() {
   const [currentTime, setCurrentTime] = useState();
   const post = useSelector((state) => state.post.post);
+  const meeting = useSelector((state) => state.post.meeting);
+  // const user = useSelector((state) => state.auth.user);
   console.log("post: ", post);
+  console.log("meeting: ", meeting);
+  // console.log("user: ", user);
 
   const date = new Date();
 
@@ -58,7 +70,38 @@ export default function CheckboxListSecondary() {
 
   const getPost = useCallback(async () => {
     dispatch(getPostDetails(`${id}`));
+    getMeetingToEvent();
   }, []);
+
+  const handleCreateMeeting = async (post) => {
+    dispatch(
+      postMeetingDetails({
+        title: post.title,
+        category: post.category,
+        description: post.description,
+        price: post.price,
+        date: post.date,
+        time_start: post.time_start,
+        time_end: post.time_end,
+        priority: post.priority,
+        geolocation_name: post.geolocation_name,
+      })
+    );
+  };
+
+  const getMeetingToEvent = useCallback(async () => {
+    await dispatch(getMeetingDetails());
+  }, []);
+
+  const handleAddFavoriteEvent = async (post) => {
+    dispatch(
+      postFavoriteList({
+        type: "event",
+        events: post.id,
+      })
+    );
+    await dispatch(getFavoriteList());
+  };
 
   useEffect(() => {
     getPost();
@@ -175,11 +218,19 @@ export default function CheckboxListSecondary() {
           </PostDetailsInfoBox>
 
           <PostDetailsFunctionBox>
-            <Button variant="contained" color="success">
-              Я пойду!
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => handleCreateMeeting(post)}
+            >
+              Присоедениться
             </Button>
 
-            <Button variant="contained" color="warning">
+            <Button
+              variant="contained"
+              color="warning"
+              onClick={() => handleAddFavoriteEvent(post)}
+            >
               Добавить в избранное
             </Button>
           </PostDetailsFunctionBox>
@@ -189,7 +240,7 @@ export default function CheckboxListSecondary() {
       </Box>
 
       <PostDetailsListBox>
-        <ListMemberCustomList dense>
+        {/* <ListMemberCustomList dense>
           {[0, 1, 2, 3].map((value) => {
             const labelId = `checkbox-list-secondary-label-${value}`;
             return (
@@ -237,6 +288,41 @@ export default function CheckboxListSecondary() {
               </ListItem>
             );
           })}
+        </ListMemberCustomList> */}
+
+        <ListMemberCustomList dense>
+          <ListItem
+            secondaryAction={
+              <IconButton>
+                <MessageIcon
+                  sx={{
+                    color: theme.palette.primary.base,
+                  }}
+                />
+              </IconButton>
+            }
+            disablePadding
+          >
+            <ListItemButton>
+              <ListItemAvatar>
+                <Avatar alt={`Avatar `} src={`/static/images/avatar.jpg`} />
+              </ListItemAvatar>
+
+              <ListMemberCustomListItemText
+                primary={`Название: ${post.title}`}
+              />
+              {/* 
+              <ListMemberCustomListItemText
+                primary={`Участник: ${user.username}`}
+              />
+
+              <ListMemberCustomListItemText
+                primary={`Номер: ${user.phone_number}`}
+              />
+
+              <ListMemberCustomListItemText primary={`Пол: ${user.gender}`} /> */}
+            </ListItemButton>
+          </ListItem>
         </ListMemberCustomList>
       </PostDetailsListBox>
     </PostDetailsContainer>

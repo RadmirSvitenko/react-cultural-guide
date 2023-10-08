@@ -22,9 +22,12 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import Favorite from "./Favorite/Favorite";
+import Favorite from "components/Favorite/Favorite";
+import AddEvent from "components/AddEvent/AddEvent";
 
 const Header = () => {
+  const [openModalFavorite, setOpenModalFavorite] = useState(false);
+  const [openModalAddEvent, setOpenModalAddEvent] = useState(false);
   const [selectedLang, setSelectedLang] = useState("ru");
   const [openMenu, setOpenMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -45,83 +48,70 @@ const Header = () => {
     handleLangClose();
   };
 
+  const toggleModalFavorite = () => {
+    setOpenModalFavorite((open) => !open);
+  };
+
+  const toggleModalAddEvent = () => {
+    setOpenModalAddEvent((open) => !open);
+  };
+
   return (
     <HeaderAppBar>
       <MyHeader>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <MenuButton open={openMenu} onClick={toggleMenu}>
-            <Menu />
-          </MenuButton>
-          <LogoText variant="h2">{t("toGo")}</LogoText>
-          <NavMenu>
-            <NavLink>{t("aboutUs")}</NavLink>
-            <NavLink>{t("contacts")}</NavLink>
-          </NavMenu>
-        </Box>
+        <MenuButton open={openMenu} onClick={toggleMenu}>
+          <Menu />
+        </MenuButton>
+        <LogoText variant="h6">{t("toGo")}</LogoText>
+        <NavMenu>
+          <NavLink>{t("aboutUs")}</NavLink>
+          <NavLink>{t("contacts")}</NavLink>
+        </NavMenu>
 
-        <Box>
-          <SearchBar
-            variant="standart"
-            disableUnderline={true}
-            startAdornment={
-              <InputAdornment position="start" sx={{ margin: "6px" }}>
-                <Search />
-              </InputAdornment>
-            }
-            placeholder={t("search")}
-          />
-          <IconButton
-            sx={{
-              marginLeft: 40,
-              color: "white",
-              width: "35px",
-              height: "35px",
-            }}
-          >
-            <Badge color="secondary">
-              <FavoriteIcon />
-            </Badge>
+        <SearchBar
+          variant="standart"
+          disableUnderline={true}
+          startAdornment={
+            <InputAdornment position="center" sx={{ margin: "6px" }}>
+              <Search />
+            </InputAdornment>
+          }
+          placeholder={t("search")}
+        />
+        <Box display={"flex"} justifyContent={"space-evenly"}>
+          <IconButton onClick={toggleModalFavorite}>
+            <FavoriteIcon sx={{ color: "white" }} />
           </IconButton>
           <IconButton>
             <AccountCircleIcon sx={{ color: "white" }} />
           </IconButton>
-          <IconButton>
-            <AddCircleIcon sx={{ marginRight: 10, color: "white" }} />
+          <IconButton onClick={toggleModalAddEvent}>
+            <AddCircleIcon sx={{ color: "white" }} />
           </IconButton>
         </Box>
-
-        <Box>
-          <Menu
-            anchorEl={anchorEl}
-            id="basic-menu"
-            open={Boolean(anchorEl)}
-            onClose={handleLangClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem onClick={() => handleLangChange("ru")}>RU</MenuItem>
-            <MenuItem onClick={() => handleLangChange("en")}>EN</MenuItem>
-          </Menu>
-          <IconButton
-            sx={{ color: "white" }}
-            onClick={(e) => setAnchorEl(e.currentTarget)}
-          >
-            {selectedLang}
-            <LanguageIcon />
-          </IconButton>
-        </Box>
-
-        <Box>
-          <Favorite />
-        </Box>
+        <Menu
+          anchorEl={anchorEl}
+          id="basic-menu"
+          open={Boolean(anchorEl)}
+          onClose={handleLangClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={() => handleLangChange("ru")}>RU</MenuItem>
+          <MenuItem onClick={() => handleLangChange("en")}>EN</MenuItem>
+        </Menu>
+        <IconButton
+          sx={{ color: "white" }}
+          onClick={(e) => setAnchorEl(e.currentTarget)}
+        >
+          {selectedLang}
+          <LanguageIcon />
+        </IconButton>
       </MyHeader>
+
+      <Favorite open={openModalFavorite} onClose={toggleModalFavorite} />
+      <AddEvent open={openModalAddEvent} onClose={toggleModalAddEvent} />
     </HeaderAppBar>
   );
 };

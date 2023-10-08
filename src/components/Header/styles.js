@@ -1,17 +1,26 @@
-import { AppBar, IconButton, Input, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  DialogContent,
+  IconButton,
+  Input,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const HeaderAppBar = styled(AppBar)(() => ({
   width: "100%",
-  padding: "0 100px",
+  height: "80px",
   boxShadow: "initial",
 }));
 
 export const MyHeader = styled(Toolbar)(() => ({
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "space-evenly",
   width: "100%",
+  height: "80px",
+  alignItems: "center",
 }));
 
 export const MenuButton = styled(IconButton)(({ theme }) => ({
@@ -48,4 +57,11 @@ export const SearchBar = styled(Input)(() => ({
   borderRadius: "62px",
   background: "#f0f0f0",
   width: "500px",
+}));
+
+export const ModalCustomDialogContent = styled(DialogContent)(() => ({
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "column",
+  width: "100%",
 }));

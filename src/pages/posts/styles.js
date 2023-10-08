@@ -49,6 +49,7 @@ export const PostsPageAllPostsBox = styled(Grid)(() => ({
 export const PostsPagePostBox = styled(Box)(() => ({
   width: "330px",
   height: "auto",
+  minHeight: "500px",
   display: "flex",
   flexDirection: "column",
   outline: "3px solid #ef6c00",
@@ -100,10 +101,11 @@ export const PostBoxContentBox = styled(Box)(() => ({
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  height: "100%",
+  minHeight: "300px",
+  height: "auto",
   outline: "1px solid #ef6c00",
   borderRadius: "15px",
-  margin: "10px 0px",
+  margin: "50px 0px",
 }));
 
 export const PostBoxContent = styled(List)(() => ({
