@@ -73,11 +73,12 @@ const RegistrationUser = () => {
             username: user.username,
             email: user.email,
             password: user.password,
+            confirm_password: user.confirm_password,
           },
         })
       );
 
-      navigate("/"); // Предположим, что "/" - это ваш путь к главной странице
+      navigate("/");
     } catch (error) {
       console.log("error: ", error);
     }

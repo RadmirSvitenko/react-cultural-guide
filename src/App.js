@@ -17,6 +17,7 @@ import { Provider } from "react-redux";
 import store from "store";
 import { theme } from "theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import Profile from "pages/ProfilePage/Profile";
 
 function App() {
   const user = useSelector(authSelectors.user);
@@ -43,7 +44,8 @@ function App() {
               />
               <Route element={<MainLayouts />}>
                 <Route path="/" element={<Posts />} />
-                <Route path="/:id" element={<PostDetails />} />
+                <Route path="post/:id" element={<PostDetails />} />
+                <Route path="/profile/" element={<Profile />} />
               </Route>
             </Routes>
           </AuthProvider>

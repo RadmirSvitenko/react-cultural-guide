@@ -4,8 +4,8 @@ import { userRegister, companyRegister } from "./registrationAPI";
 // Создание асинхронного экшена для регистрации пользователя
 export const userRegisterAsync = createAsyncThunk(
   "register/user",
-  async (userData) => {
-    const response = await userRegister(userData);
+  async (user) => {
+    const response = await userRegister(user);
     return response.user;
   }
 );
@@ -13,8 +13,8 @@ export const userRegisterAsync = createAsyncThunk(
 // Создание асинхронного экшена для регистрации компании
 export const companyRegisterAsync = createAsyncThunk(
   "register/company",
-  async (companyData) => {
-    const response = await companyRegister(companyData);
+  async (company) => {
+    const response = await companyRegister(company);
     return response.company;
   }
 );
@@ -31,23 +31,30 @@ const initialState = {
 const registerSlice = createSlice({
   name: "register",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(userRegisterAsync.pending, (state) => {
         state.user.isLoading = true;
       })
-      .addCase(userRegisterAsync.fulfilled, (state) => {
+      .addCase(userRegisterAsync.fulfilled, (state, action) => {
         state.user.isLoading = false;
+        state.user = action.payload;
       })
+
       .addCase(userRegisterAsync.rejected, (state) => {
         state.user.isLoading = false;
       })
       .addCase(companyRegisterAsync.pending, (state) => {
         state.company.isLoading = true;
       })
-      .addCase(companyRegisterAsync.fulfilled, (state) => {
+      .addCase(companyRegisterAsync.fulfilled, (state, action) => {
         state.company.isLoading = false;
+        state.company = action.payload;
       })
       .addCase(companyRegisterAsync.rejected, (state) => {
         state.company.isLoading = false;
