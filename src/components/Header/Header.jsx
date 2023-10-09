@@ -32,6 +32,7 @@ import { theme } from "theme";
 import ModalAuth from "components/ModalAuth/ModalAuth";
 import { useDispatch } from "react-redux";
 import { getPostsList, serchPostsByPostList } from "reducers/postsSlice";
+import { useNavigate } from "react-router";
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -43,7 +44,7 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
   const toggleMenu = () => {
@@ -52,6 +53,10 @@ const Header = () => {
 
   const handleLangClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleNavigateMainPage = () => {
+    navigate("/");
   };
 
   const handleLangChange = (language) => {
@@ -92,7 +97,9 @@ const Header = () => {
         <MenuButton open={openMenu} onClick={toggleMenu}>
           <Menu />
         </MenuButton>
-        <LogoText variant="h6">{t("toGo")}</LogoText>
+        <LogoText onClick={handleNavigateMainPage} variant="h6">
+          {t("toGo")}
+        </LogoText>
         <NavMenu>
           <CustomNavLink>{t("aboutUs")}</CustomNavLink>
           <CustomNavLink>{t("contacts")}</CustomNavLink>

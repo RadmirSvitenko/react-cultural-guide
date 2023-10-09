@@ -44,7 +44,7 @@ function App() {
               />
               <Route element={<MainLayouts />}>
                 <Route path="/" element={<Posts />} />
-                <Route path="post/:id" element={<PostDetails />} />
+                <Route path="/:id" element={<PostDetails />} />
                 <Route path="/profile/" element={<Profile />} />
               </Route>
             </Routes>

@@ -36,6 +36,7 @@ export const LogoText = styled(Typography)(() => ({
   color: "white",
   fontSize: "15px",
   fontWeight: 500,
+  cursor: "pointer",
   [theme.breakpoints.down("sm")]: {
     display: "none",
   },

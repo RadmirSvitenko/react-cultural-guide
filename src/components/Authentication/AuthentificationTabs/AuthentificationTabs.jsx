@@ -2,8 +2,8 @@ import { Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import Authorization from "../Authorization/Authorization";
-import RegistrationUser from "../RegistrationUser/RegistrationUser";
-import RegistrationCompany from "../RegistrationCompany/RegistrationCompany";
+import RegistrationUser from "../Registration/RegistrationUser/RegistrationUser";
+import RegistrationCompany from "../Registration/RegistrationCompany/RegistrationCompany";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;

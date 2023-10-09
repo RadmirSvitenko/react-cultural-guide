@@ -126,10 +126,7 @@ export default function CheckboxListSecondary() {
   const handleAddFavoriteEvent = async (post) => {
     dispatch(
       postFavoriteList({
-        type: "event",
-        events: post.id,
-        tours: "",
-        meetings: "",
+        events: post,
       })
     );
     await dispatch(getFavoriteList());

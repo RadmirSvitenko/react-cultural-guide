@@ -75,6 +75,10 @@ const Posts = () => {
     return <CircularProgress size={"large"} color="secondary" />;
   }
 
+  if (isLoading || !posts) {
+    <CircularProgress />;
+  }
+
   return (
     <>
       <PostsPageMainConteiner>
