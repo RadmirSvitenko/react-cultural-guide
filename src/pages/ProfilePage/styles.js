@@ -12,12 +12,12 @@ export const ProfileBox = styled(Box)(() => ({
 
 export const ProfilePaper = styled(Paper)(() => ({
   padding: "10px",
-  width: "25%",
+  gap: "30px",
+  minWidth: "300px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "space-around",
-  gap: "30px",
+  justifyContent: "center",
 }));
 
 export const ProfileDisplayBox = styled(Box)(() => ({
@@ -25,6 +25,8 @@ export const ProfileDisplayBox = styled(Box)(() => ({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  gap: "20px",
+  maxWidth: "100%",
 }));
 
 export const ProfileTypography = styled(Typography)(() => ({

@@ -1,4 +1,4 @@
-import { Typography, CircularProgress, Button } from "@mui/material";
+import { Typography, CircularProgress, Button, Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ import {
   ProfilePaper,
   ProfileTypography,
 } from "./styles";
+import EditProfileModal from "components/EditProfileModal/EditProfileModal";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -65,18 +66,20 @@ export default function Profile() {
     <ProfileBox>
       <ProfilePaper elevation={20}>
         <ProfileDisplayBox>
-          <Box sx={{ width: "50%" }}>
+          <Box
+            sx={{
+              width: window.innerWidth <= 425 ? "100px" : "160px",
+              borderRadius: "100%",
+            }}
+          >
             <img
-              src={
-                currentUser.photo ||
-                "https://www.roiconnect.ca/wp-content/uploads/2021/07/DefaultAvatar.png"
-              }
               style={{
                 maxWidth: "100%",
-                height: "100%",
+                width: "100%",
                 borderRadius: "100%",
               }}
-              alt="User avatar"
+              src={currentUser.photo}
+              alt="User"
             />
           </Box>
           <ProfileTypography variant="h5">
@@ -120,6 +123,9 @@ export default function Profile() {
           </List>
         </Box>
       </ProfilePaper>
+      <Modal open={isEditModalOpen} onClose={handleCloseEditModal}>
+        <EditProfileModal onClose={handleCloseEditModal} />
+      </Modal>
     </ProfileBox>
   );
 }
