@@ -2,18 +2,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
-
-import "./styles.css";
-
-import { EffectCoverflow, Pagination } from "swiper/modules";
 import {
   ListMemberCustomList,
   ListMemberCustomListItemText,
+  PostCommentsBox,
+  PostCommentsContainer,
   PostDetailsBox,
   PostDetailsContainer,
   PostDetailsDescription,
@@ -29,13 +23,22 @@ import {
   PostDetailsTitleBox,
 } from "./styles";
 
-import { Button, IconButton, Rating } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Rating,
+  TextField,
+  Typography,
+} from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import CommentIcon from "@mui/icons-material/Comment";
 import { theme } from "theme";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addCommentPostDetails,
+  getCommentPostDetails,
   getMeetingDetails,
   getPostDetails,
   postMeetingDetails,
@@ -47,18 +50,32 @@ import { async } from "q";
 import { getFavoriteList, postFavoriteList } from "reducers/favoriteSlice";
 
 export default function CheckboxListSecondary() {
+  const [commentValue, setCommentValue] = useState();
   const [currentTime, setCurrentTime] = useState();
   const post = useSelector((state) => state.post.post);
   const meeting = useSelector((state) => state.post.meeting);
-  // const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
+  const comment = useSelector((state) => state.post.comment);
+  console.log("comment: ", comment);
+
   console.log("post: ", post);
   console.log("meeting: ", meeting);
-  // console.log("user: ", user);
+  console.log("user: ", user);
 
-  const date = new Date();
+  const getNowTimePhone = () => {
+    setInterval(() => {
+      let date = new Date();
+      let time = date.toLocaleTimeString();
+      console.log("time: ", time);
 
-  // const time = setInterval(date.toLocaleTimeString(), 1000);
-  const time = date.toLocaleTimeString();
+      setCurrentTime(time);
+    }, 1000);
+  };
+
+  // const date = new Date();
+
+  // // const time = setInterval(date.toLocaleTimeString(), 1000);
+  // const time = date.toLocaleTimeString();
 
   const dispatch = useDispatch();
 
@@ -85,6 +102,23 @@ export default function CheckboxListSecondary() {
     );
   };
 
+  // const handleAddComment = (id, title) => {
+  //   dispatch(addCommentPostDetails({ id: id, title: title }));
+  // };
+
+  const handleChangeSubmitComment = (e, id, value) => {
+    console.log("value: ", value);
+    console.log("id: ", id);
+    console.log("e: ", e);
+    e.preventDefault();
+    dispatch(addCommentPostDetails({ id: id, value: value }));
+    handleGetComments(id, value);
+  };
+
+  const handleGetComments = (id) => {
+    dispatch(getCommentPostDetails(id));
+  };
+
   const getMeetingToEvent = useCallback(async () => {
     await dispatch(getMeetingDetails());
   }, []);
@@ -94,100 +128,32 @@ export default function CheckboxListSecondary() {
       postFavoriteList({
         type: "event",
         events: post.id,
+        tours: "",
+        meetings: "",
       })
     );
     await dispatch(getFavoriteList());
+  };
+
+  const handleChangeComment = (e) => {
+    setCommentValue(e.target.value);
   };
 
   useEffect(() => {
     getPost();
   }, [getPost]);
 
+  useEffect(() => {
+    handleGetComments();
+  }, []);
+
   return (
     <PostDetailsContainer>
-      {/* <PostDetailsSliderBox>
-        <Swiper
-          loop
-          autoplay={{
-            delay: 5000,
-          }}
-          effect={"coverflow"}
-          grabCursor={true}
-          centeredSlides={true}
-          slidesPerView={"auto"}
-          coverflowEffect={{
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: true,
-          }}
-          pagination={true}
-          modules={[EffectCoverflow, Pagination]}
-          className="mySwiper"
-        >
-          <SwiperSlide>
-            <img
-              src="https://swiperjs.com/demos/images/nature-1.jpg"
-              alt="slide"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://swiperjs.com/demos/images/nature-2.jpg"
-              alt="slide"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://swiperjs.com/demos/images/nature-3.jpg"
-              alt="slide"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://swiperjs.com/demos/images/nature-4.jpg"
-              alt="slide"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://swiperjs.com/demos/images/nature-5.jpg"
-              alt="slide"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://swiperjs.com/demos/images/nature-6.jpg"
-              alt="slide"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://swiperjs.com/demos/images/nature-7.jpg"
-              alt="slide"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://swiperjs.com/demos/images/nature-8.jpg"
-              alt="slide"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://swiperjs.com/demos/images/nature-9.jpg"
-              alt="slide"
-            />
-          </SwiperSlide>
-        </Swiper>
-      </PostDetailsSliderBox> */}
-
       <Box width={"100%"} display={"flex"} justifyContent={"space-evenly"}>
         <PostDetailsBox>
           <PostDetailsTitleBox>
             <PostDetailsTitle>{post.title}</PostDetailsTitle>
-            <PostDetailsTitle>{time}</PostDetailsTitle>
+            <PostDetailsTitle>{currentTime}</PostDetailsTitle>
           </PostDetailsTitleBox>
 
           <PostDetailsDescriptionBox>
@@ -235,112 +201,44 @@ export default function CheckboxListSecondary() {
         <PostDetailsMap></PostDetailsMap>
       </Box>
 
-      <PostDetailsListBox>
-        {/* <ListMemberCustomList dense>
-          {[0, 1, 2, 3].map((value) => {
-            const labelId = `checkbox-list-secondary-label-${value}`;
-            return (
-              <ListItem
-                key={value}
-                secondaryAction={
-                  <IconButton>
-                    <MessageIcon
-                      sx={{
-                        color: theme.palette.primary.base,
-                      }}
-                    />
-                  </IconButton>
-                }
-                disablePadding
-              >
-                <ListItemButton>
-                  <ListItemAvatar>
-                    <Avatar
-                      alt={`Avatar n°${value + 1}`}
-                      src={`/static/images/avatar/${value + 1}.jpg`}
-                    />
-                  </ListItemAvatar>
-
-                  <ListMemberCustomListItemText
-                    id={labelId}
-                    primary={`Online/Offline `}
-                  />
-
-                  <ListMemberCustomListItemText
-                    id={labelId}
-                    primary={`Username ${value + 1}`}
-                  />
-
-                  <ListMemberCustomListItemText
-                    id={labelId}
-                    primary={`Gender`}
-                  />
-
-                  <ListMemberCustomListItemText
-                    id={labelId}
-                    primary={post.title}
-                  />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </ListMemberCustomList> */}
-
-        <ListMemberCustomList dense>
-          <ListItem
-            secondaryAction={
-              <IconButton>
-                <MessageIcon
-                  sx={{
-                    color: theme.palette.primary.base,
-                  }}
-                />
-              </IconButton>
+      <PostCommentsContainer>
+        <PostCommentsBox>
+          <form
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+            }}
+            onSubmit={(e) =>
+              handleChangeSubmitComment(e, post.id, commentValue)
             }
-            disablePadding
           >
-            <ListItemButton>
-              <ListItemAvatar>
-                <Avatar alt={`Avatar `} src={`/static/images/avatar.jpg`} />
-              </ListItemAvatar>
+            <TextField
+              onChange={handleChangeComment}
+              multiline="true"
+              placeholder="Введите ваше мнение сюда"
+              sx={{ mb: 1, minWidth: "300px", minHeight: "300px" }}
+            />
 
-              <ListMemberCustomListItemText
-                primary={`Название: ${post.title}`}
-              />
-
-              <ListMemberCustomListItemText
-                primary={`Название: ${post.title}`}
-              />
-
-              <ListMemberCustomListItemText
-                primary={`Название: ${post.title}`}
-              />
-
-              <ListMemberCustomListItemText
-                primary={`Название: ${post.title}`}
-              />
-
-              <ListMemberCustomListItemText
-                primary={`Название: ${post.title}`}
-              />
-
-              <ListMemberCustomListItemText
-                primary={`Название: ${post.title}`}
-              />
-              {/* 
-              <ListMemberCustomListItemText
-                primary={`Участник: ${user.username}`}
-              />
-
-              <ListMemberCustomListItemText
-                primary={`Номер: ${user.phone_number}`}
-              />
-
-              <ListMemberCustomListItemText primary={`Пол: ${user.gender}`} /> */}
-            </ListItemButton>
-          </ListItem>
-        </ListMemberCustomList>
-      </PostDetailsListBox>
+            <Button type="submit" color="primary" variant="contained">
+              Отправить
+            </Button>
+          </form>
+        </PostCommentsBox>
+        <Box
+          sx={{
+            marginBottom: "100px",
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            flexWrap: "wrap",
+          }}
+        >
+          {comment.map(({ title }) => (
+            <p>{title}</p>
+          ))}
+        </Box>
+      </PostCommentsContainer>
     </PostDetailsContainer>
   );
 }

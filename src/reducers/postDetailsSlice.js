@@ -3,6 +3,7 @@ import API from "requester";
 
 const initialState = {
   post: {},
+  comment: [],
   meeting: [],
   isLoading: false,
 };
@@ -11,6 +12,24 @@ export const getPostDetails = createAsyncThunk(
   "getPostDetails/get",
   async (id) => {
     const response = await API.get(`ev/events/${id}`);
+    return response.data;
+  }
+);
+
+export const addCommentPostDetails = createAsyncThunk(
+  "addCommentPostDetails/post",
+  async (params) => {
+    const response = await API.post(`ev/events/${params.id}/comments/`, {
+      title: params.value,
+    });
+    return response.data;
+  }
+);
+
+export const getCommentPostDetails = createAsyncThunk(
+  "getCommentPostDetails/get",
+  async (id) => {
+    const response = await API.get(`ev/events/${id}/comments/`);
     return response.data;
   }
 );
@@ -61,6 +80,12 @@ const postDetailsSlice = createSlice({
       state.isLoading = false;
       state.post = action.payload;
       state.meeting = action.payload;
+    });
+
+    builder.addCase(getCommentPostDetails.fulfilled, (state, action) => {
+      state.error = action.error;
+      state.isLoading = false;
+      state.comment = action.payload;
     });
 
     builder.addCase(getPostDetails.rejected, (state, action) => {

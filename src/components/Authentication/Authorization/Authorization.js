@@ -44,53 +44,62 @@ export default function Authorization() {
   };
 
   return (
-    <AuthorizationBox>
-      <AuthorizationPaper elevation={20}>
-        <AuthorizationTitle>Авторизация </AuthorizationTitle>
-        <TextField
-          required
-          name="email"
-          type="email"
-          label="Электронная почта"
-          value={user.email}
-          autoComplete="on"
-          onChange={handleChange}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <EmailTwoToneIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          required
-          name="password"
-          type="password"
-          label="Пароль"
-          value={user.password}
-          autoComplete="on"
-          onChange={handleChange}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <VpnKeyTwoToneIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <AuthorizationButton variant="contained" onClick={login}>
-          Login
-        </AuthorizationButton>
-        <Box>
+    // <AuthorizationBox>
+    <AuthorizationPaper elevation={0}>
+      <AuthorizationTitle>Авторизация </AuthorizationTitle>
+      <TextField
+        margin="dense"
+        required
+        name="email"
+        type="email"
+        label="Электронная почта"
+        value={user.email}
+        autoComplete="on"
+        onChange={handleChange}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <EmailTwoToneIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <TextField
+        margin="dense"
+        required
+        name="password"
+        type="password"
+        label="Пароль"
+        value={user.password}
+        autoComplete="on"
+        onChange={handleChange}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <VpnKeyTwoToneIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <AuthorizationButton
+        sx={{
+          margin: "10px 0px",
+          width: window.innerWidth <= 600 ? "100%" : false,
+        }}
+        variant="contained"
+        onClick={login}
+      >
+        Login
+      </AuthorizationButton>
+      {/* <Box>
           <Typography sx={{ color: "gray", fontSize: "15px" }}>
             Не зарегестрированы?
           </Typography>
           <LinkText onClick={handleNavigateToRegistration}>
             Регистрация
           </LinkText>
-        </Box>
-      </AuthorizationPaper>
-    </AuthorizationBox>
+        </Box> */}
+    </AuthorizationPaper>
+    // </AuthorizationBox>
   );
 }

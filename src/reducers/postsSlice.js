@@ -6,10 +6,22 @@ const initialState = {
   isLoading: false,
 };
 
-export const getPostsList = createAsyncThunk("getPostsList/get", async () => {
-  const response = await API.get("ev/events/");
-  return response.data;
-});
+export const getPostsList = createAsyncThunk(
+  "getPostsList/get",
+  async (params) => {
+    const response = await API.get(`ev/events/`, { params });
+    return response.data;
+  }
+);
+
+export const serchPostsByPostList = createAsyncThunk(
+  "getPostsList/search",
+  async (title) => {
+    const response = await API.get(`ev/events/?search=${title}`);
+    console.log("response: ", response.data);
+    return response.data;
+  }
+);
 
 export const addPost = createAsyncThunk("addPostsList/post", async (params) => {
   const response = await API.post("ev/events/", {

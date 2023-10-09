@@ -180,6 +180,7 @@ const AddEvent = ({ open, onClose }) => {
 
             <Button
               sx={{
+                margin: "15px 0px",
                 [theme.breakpoints.down("sm")]: {
                   width: "200px",
                   margin: "30px 0px",

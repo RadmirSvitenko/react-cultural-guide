@@ -1,4 +1,4 @@
-import { Search } from "@mui/icons-material";
+import { Close, Search } from "@mui/icons-material";
 import {
   HeaderAppBar,
   LogoText,
@@ -8,6 +8,7 @@ import {
   SearchBar,
   NavLink,
   CustomNavLink,
+  SearchField,
 } from "./styles";
 import {
   Badge,
@@ -16,6 +17,7 @@ import {
   InputAdornment,
   Menu,
   MenuItem,
+  TextField,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -27,13 +29,20 @@ import Favorite from "components/Favorite/Favorite";
 import AddEvent from "components/AddEvent/AddEvent";
 import { display } from "@mui/system";
 import { theme } from "theme";
+import ModalAuth from "components/ModalAuth/ModalAuth";
+import { useDispatch } from "react-redux";
+import { getPostsList, serchPostsByPostList } from "reducers/postsSlice";
 
 const Header = () => {
+  const [searchValue, setSearchValue] = useState("");
   const [openModalFavorite, setOpenModalFavorite] = useState(false);
   const [openModalAddEvent, setOpenModalAddEvent] = useState(false);
+  const [openModalAuth, setOpenModalAuth] = useState(false);
   const [selectedLang, setSelectedLang] = useState("ru");
   const [openMenu, setOpenMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const dispatch = useDispatch();
 
   const { t, i18n } = useTranslation();
 
@@ -51,12 +60,30 @@ const Header = () => {
     handleLangClose();
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getPostsList({ search: searchValue }));
+  };
+
+  const handleSearch = (e) => {
+    setSearchValue(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleClearSearchValue = () => {
+    setSearchValue("");
+  };
+
   const toggleModalFavorite = () => {
     setOpenModalFavorite((open) => !open);
   };
 
   const toggleModalAddEvent = () => {
     setOpenModalAddEvent((open) => !open);
+  };
+
+  const toggleModalAuth = () => {
+    setOpenModalAuth((open) => !open);
   };
 
   return (
@@ -71,26 +98,37 @@ const Header = () => {
           <CustomNavLink>{t("contacts")}</CustomNavLink>
         </NavMenu>
 
-        <SearchBar
-          variant="standart"
-          disableUnderline={true}
-          startAdornment={
-            <InputAdornment position="center" sx={{ margin: "6px" }}>
-              <Search />
-            </InputAdornment>
-          }
-          sx={{
-            [theme.breakpoints.down("md")]: {
-              width: "200px",
-            },
-          }}
-          placeholder={t("search")}
-        />
+        <form onSubmit={handleSearchSubmit}>
+          <SearchField
+            label="Поиск постов..."
+            value={searchValue}
+            onChange={handleSearch}
+            variant="outlined"
+            InputProps={{
+              endAdornment: (
+                <IconButton
+                  type="submit"
+                  sx={{ color: theme.palette.primary.base }}
+                >
+                  {searchValue.length >= 1 ? (
+                    <Close onClick={handleClearSearchValue} />
+                  ) : (
+                    <Search type="submit" />
+                  )}
+                </IconButton>
+              ),
+            }}
+            InputLabelProps={{
+              style: { color: theme.palette.primary.base },
+            }}
+          />
+        </form>
+
         <Box display={"flex"} justifyContent={"space-evenly"}>
           <IconButton onClick={toggleModalFavorite}>
             <FavoriteIcon sx={{ color: "white" }} />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={toggleModalAuth}>
             <AccountCircleIcon sx={{ color: "white" }} />
           </IconButton>
           <IconButton onClick={toggleModalAddEvent}>
@@ -120,6 +158,7 @@ const Header = () => {
 
       <Favorite open={openModalFavorite} onClose={toggleModalFavorite} />
       <AddEvent open={openModalAddEvent} onClose={toggleModalAddEvent} />
+      <ModalAuth open={openModalAuth} onClose={toggleModalAuth} />
     </HeaderAppBar>
   );
 };

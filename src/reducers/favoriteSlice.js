@@ -20,6 +20,8 @@ export const postFavoriteList = createAsyncThunk(
     const response = await API.post(`add_to_favourites/`, {
       type: params.type,
       events: params.events,
+      tours: params.tours,
+      meetings: params.meetings,
 
       multi: true,
       headers: {

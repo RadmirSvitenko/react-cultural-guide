@@ -3,6 +3,7 @@ import {
   DialogContent,
   IconButton,
   Input,
+  TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -68,10 +69,45 @@ export const ModalCustomDialogContent = styled(DialogContent)(() => ({
   alignItems: "center",
   flexDirection: "column",
   width: "100%",
+  minWidth: "400px",
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "flex-start",
+    width: "250px",
+    margin: "10px 0px",
+    justifyContent: "center",
+  },
 }));
 
 export const CustomNavLink = styled(NavLink)(() => ({
   [theme.breakpoints.down("lg")]: {
     display: "none",
+  },
+}));
+
+export const SearchField = styled(TextField)(() => ({
+  "& .MuiOutlinedInput-root": {
+    color: theme.palette.primary.base,
+    letterSpacing: "2px",
+    fontFamily: theme.fonts.Nunito,
+
+    "& fieldset": {
+      borderColor: theme.palette.primary.base,
+      transition: "0.5s",
+    },
+    "&:hover fieldset": {
+      borderColor: theme.palette.primary.base,
+      transition: "0.5s",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.primary.base,
+      transition: "0.5s",
+    },
+    "&.MuiInputLabel-outlined": {
+      color: theme.palette.primary.base,
+    },
+
+    "&.MuiInputLabel-root.Mui-focused": {
+      color: theme.palette.primary.base,
+    },
   },
 }));

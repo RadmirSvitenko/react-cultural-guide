@@ -215,3 +215,23 @@ export const ListMemberCustomListItemText = styled(ListItemText)(() => ({
     width: "100%",
   },
 }));
+
+export const PostCommentsContainer = styled(Grid)(() => ({
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "auto",
+  minHeight: "500px",
+}));
+
+export const PostCommentsBox = styled(Box)(() => ({
+  width: "70%",
+  height: "auto",
+  minHeight: "300px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  outline: "2px solid #000",
+  borderRadius: "25px",
+}));
