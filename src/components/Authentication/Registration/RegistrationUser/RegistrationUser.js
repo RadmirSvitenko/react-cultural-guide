@@ -55,7 +55,7 @@ const RegistrationUser = () => {
       !user.password ||
       !user.confirm_password
     ) {
-      console.log("Все поля должны быть заполнены");
+      alert("Все поля должны быть заполнены");
       return;
     }
 
@@ -121,12 +121,12 @@ const RegistrationUser = () => {
           }}
         />
         <TextField
+          required
           placeholder="Пароль"
           type={showPassword ? "text" : "password"}
           name="password"
           value={user.password}
           onChange={handleInputChange}
-          required
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -146,6 +146,7 @@ const RegistrationUser = () => {
         />
 
         <TextField
+          required
           error={passwordError}
           onChange={handleInputChange}
           placeholder="Повторите пароль"
