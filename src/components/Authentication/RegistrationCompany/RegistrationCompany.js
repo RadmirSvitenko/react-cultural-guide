@@ -44,9 +44,10 @@ export default function RegistrationCompany() {
 
   return (
     <AuthorizationBox>
-      <RegistrationCompanyPaper elevation={20}>
+      <RegistrationCompanyPaper elevation={0}>
         <AuthorizationTitle>Регистрация Компании</AuthorizationTitle>
         <TextField
+          margin="dense"
           required
           name="companyName"
           placeholder="Название Компании"
@@ -62,6 +63,7 @@ export default function RegistrationCompany() {
           }}
         />
         <TextField
+          margin="dense"
           required
           name="companyDoc"
           placeholder="Doc"
@@ -77,6 +79,7 @@ export default function RegistrationCompany() {
           }}
         />
         <TextField
+          margin="dense"
           required
           name="companyPhone_number"
           placeholder="Номер Компании"
@@ -92,6 +95,7 @@ export default function RegistrationCompany() {
           }}
         />
         <TextField
+          margin="dense"
           required
           name="companyEmail"
           type="email"
@@ -108,6 +112,7 @@ export default function RegistrationCompany() {
           }}
         />
         <TextField
+          margin="dense"
           placeholder="Пароль"
           type={showPassword ? "text" : "password"}
           name="companyPassword1"
@@ -132,6 +137,7 @@ export default function RegistrationCompany() {
           }}
         />
         <TextField
+          margin="dense"
           error={passwordError}
           onChange={handleInputChange}
           placeholder="Повторите пароль"
@@ -157,7 +163,13 @@ export default function RegistrationCompany() {
             ),
           }}
         />
-        <Button onClick={handleSubmit} variant="contained">
+        <Button
+          sx={{
+            margin: "20px 0px",
+          }}
+          onClick={handleSubmit}
+          variant="contained"
+        >
           Зарегестрироваться
         </Button>
       </RegistrationCompanyPaper>

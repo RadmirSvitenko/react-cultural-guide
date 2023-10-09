@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { theme } from "theme";
 
 export const AuthorizationBox = styled(Box)(() => ({
-  height: "100vh",
+  // height: "100vh",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -16,6 +16,9 @@ export const AuthorizationPaper = styled(Paper)(() => ({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "space-around",
+  [theme.breakpoints.down("sm")]: {
+    padding: "0px",
+  },
 }));
 export const AuthorizationForm = styled(Box)(() => ({
   display: "flex",

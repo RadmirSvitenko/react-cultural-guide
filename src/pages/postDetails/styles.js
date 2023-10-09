@@ -8,6 +8,12 @@ export const PostDetailsContainer = styled(Grid)(() => ({
   height: "auto",
   background: theme.palette.primary.secondary,
   padding: "50px",
+  display: "flex",
+  flexWrap: "wrap",
+  flexDirection: "column",
+  [theme.breakpoints.down("lg")]: {
+    width: "100%",
+  },
 }));
 
 export const PostDetailsSliderBox = styled(Grid)(() => ({
@@ -15,12 +21,15 @@ export const PostDetailsSliderBox = styled(Grid)(() => ({
   height: "auto",
 }));
 
-export const PostDetailsMapBox = styled(Grid)(() => ({
-  width: "50%",
-  display: "flex",
+export const PostDetailsMapBox = styled(Box)(() => ({
+  width: "500px",
+  maxWidth: "500px",
+  height: "500px",
   alignItems: "center",
-  height: "auto",
   outline: "2px solid #000",
+  [theme.breakpoints.down("lg")]: {
+    display: "none",
+  },
 }));
 
 export const PostDetailsMap = styled(Grid)(() => ({
@@ -32,11 +41,15 @@ export const PostDetailsMap = styled(Grid)(() => ({
   outline: "2px solid #000",
   borderRadius: "25px",
   background: `url("https://willfaulkner.com/wp-content/uploads/2020/09/The-best-photography-locations-in-the-world-featured-image.jpg")`,
+  [theme.breakpoints.down("lg")]: {
+    display: "none",
+  },
 }));
 
-export const PostDetailsBox = styled(Grid)(() => ({
+export const PostDetailsBox = styled(Box)(() => ({
   width: "500px",
   height: "500px",
+  minWidth: "500px",
   display: "flex",
   flexDirection: "column",
   flexWrap: "wrap",
@@ -47,6 +60,16 @@ export const PostDetailsBox = styled(Grid)(() => ({
   outline: "3px solid #ef6c00",
   borderRadius: "25px",
   background: "#101010",
+  [theme.breakpoints.down("sm")]: {
+    width: "280px",
+    padding: "20px 5px",
+    height: "auto",
+    minHeight: "800px",
+    minWidth: "300px",
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "column",
+  },
 }));
 
 export const PostDetailsTitle = styled(Box)(() => ({
@@ -56,6 +79,10 @@ export const PostDetailsTitle = styled(Box)(() => ({
   color: "#fff",
   textTransform: "uppercase",
   letterSpacing: "2px",
+
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "16px",
+  },
 }));
 
 export const PostDetailsTime = styled(Box)(() => ({
@@ -63,6 +90,9 @@ export const PostDetailsTime = styled(Box)(() => ({
   fontWeight: "bold",
   fontSize: "20px",
   color: "#fff",
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "16px",
+  },
 }));
 
 export const PostDetailsTitleBox = styled(Box)(() => ({
@@ -71,6 +101,12 @@ export const PostDetailsTitleBox = styled(Box)(() => ({
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "16px",
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "column",
+  },
 }));
 
 export const PostDetailsDescriptionBox = styled(Box)(() => ({
@@ -97,6 +133,11 @@ export const PostDetailsFunctionBox = styled(Box)(() => ({
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
+  [theme.breakpoints.down("sm")]: {
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "column",
+  },
 }));
 
 export const PostDetailsInfoBox = styled(Box)(() => ({
@@ -121,6 +162,12 @@ export const PostDetailsFunction = styled(Box)(() => ({
   fontFamily: theme.fonts.Nunito,
   fontSize: "40px",
   fontWeight: "700",
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "20px",
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "column",
+  },
 }));
 
 export const PostDetailsDescription = styled(Box)(() => ({
@@ -128,6 +175,9 @@ export const PostDetailsDescription = styled(Box)(() => ({
   fontFamily: theme.fonts.Nunito,
   fontSize: "40px",
   fontWeight: "700",
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "20px",
+  },
 }));
 
 export const PostDetailsListBox = styled(Grid)(() => ({
@@ -137,11 +187,20 @@ export const PostDetailsListBox = styled(Grid)(() => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  [theme.breakpoints.down("lg")]: {
+    flexDirection: "column",
+    flexWrap: "wrap",
+  },
 }));
 
 export const ListMemberCustomList = styled(List)(() => ({
   width: "100%",
   background: "#232323",
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "10px",
+    flexDirection: "column",
+    flexWrap: "wrap",
+  },
 }));
 
 export const ListMemberCustomListItemText = styled(ListItemText)(() => ({
@@ -149,4 +208,30 @@ export const ListMemberCustomListItemText = styled(ListItemText)(() => ({
   color: theme.palette.primary.base,
   fontWeight: "600",
   textAlign: "center",
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "10px",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    width: "100%",
+  },
+}));
+
+export const PostCommentsContainer = styled(Grid)(() => ({
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "auto",
+  minHeight: "500px",
+}));
+
+export const PostCommentsBox = styled(Box)(() => ({
+  width: "70%",
+  height: "auto",
+  minHeight: "300px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  outline: "2px solid #000",
+  borderRadius: "25px",
 }));

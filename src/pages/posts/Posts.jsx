@@ -21,13 +21,14 @@ import {
 } from "./styles";
 import {
   Button,
-  Collapse,
+  Grid,
   IconButton,
   ListItem,
   ListItemText,
   Rating,
   Typography,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
@@ -37,6 +38,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPostsList } from "reducers/postsSlice";
 import { Navigate, useNavigate } from "react-router-dom";
 import { theme } from "theme";
+import { Box } from "@mui/system";
 
 const Posts = () => {
   const [favoriteIcon, setFavoriteIcon] = useState(false);
@@ -54,6 +56,7 @@ const Posts = () => {
   };
 
   const posts = useSelector((state) => state.posts.postsList);
+  const isLoading = useSelector((state) => state.posts.isLoading);
   console.log("posts: ", posts);
 
   const getPosts = useCallback(async () => {
@@ -66,7 +69,11 @@ const Posts = () => {
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [getPosts]);
+
+  if (isLoading) {
+    return <CircularProgress size={"large"} color="secondary" />;
+  }
 
   return (
     <>
@@ -111,28 +118,6 @@ const Posts = () => {
                   </PostBoxRatingTitle>
                 </PostBoxRatingBox>
                 <PostBoxButtonBox>
-                  <IconButton onClick={togglewViewDetailsPost}>
-                    {arrowIcon ? (
-                      <KeyboardArrowUpRoundedIcon
-                        fontSize="large"
-                        sx={{
-                          color: "#fff",
-                        }}
-                      />
-                    ) : (
-                      <KeyboardArrowDownRoundedIcon
-                        fontSize="large"
-                        sx={{
-                          color: "#fff",
-                        }}
-                      />
-                    )}
-                  </IconButton>
-                </PostBoxButtonBox>
-              </PostBoxFunctionBox>
-
-              <Collapse timeout={1000} in={isViewPost}>
-                {posts?.map((post) => (
                   <PostCollapseContainer>
                     <PostCollapseContentBox>
                       <PostCollapseTitle>
@@ -144,10 +129,15 @@ const Posts = () => {
                     </PostCollapseContentBox>
 
                     <PostCollapseContentBox>
-                      <Button variant="contained" color="success">
+                      <Button
+                        sx={{ margin: "5px 0px" }}
+                        variant="contained"
+                        color="success"
+                      >
                         Я пойду!
                       </Button>
                       <Button
+                        sx={{ margin: "5px 0px" }}
                         variant="contained"
                         color="warning"
                         onClick={() => toDetailsPost(post)}
@@ -156,8 +146,8 @@ const Posts = () => {
                       </Button>
                     </PostCollapseContentBox>
                   </PostCollapseContainer>
-                ))}
-              </Collapse>
+                </PostBoxButtonBox>
+              </PostBoxFunctionBox>
             </PostsPagePostBox>
           ))}
         </PostsPageAllPostsBox>

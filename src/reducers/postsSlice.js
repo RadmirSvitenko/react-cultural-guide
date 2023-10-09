@@ -6,8 +6,41 @@ const initialState = {
   isLoading: false,
 };
 
-export const getPostsList = createAsyncThunk("getPostsList/get", async () => {
-  const response = await API.get("ev/events/");
+export const getPostsList = createAsyncThunk(
+  "getPostsList/get",
+  async (params) => {
+    const response = await API.get(`ev/events/`, { params });
+    return response.data;
+  }
+);
+
+export const serchPostsByPostList = createAsyncThunk(
+  "getPostsList/search",
+  async (title) => {
+    const response = await API.get(`ev/events/?search=${title}`);
+    console.log("response: ", response.data);
+    return response.data;
+  }
+);
+
+export const addPost = createAsyncThunk("addPostsList/post", async (params) => {
+  const response = await API.post("ev/events/", {
+    title: params.title,
+    category: params.category,
+    description: params.description,
+    price: params.price,
+    date: params.date,
+    time_start: params.time_start,
+    time_end: params.time_end,
+    priority: params.priority,
+    geolocation_name: params.geolocation_name,
+    organizer: params.organizer,
+
+    multi: true,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return response.data;
 });
 
