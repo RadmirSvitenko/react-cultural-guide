@@ -1,6 +1,9 @@
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { AuthorizationBox, AuthorizationTitle } from "../Authorization/styles";
+import {
+  AuthorizationBox,
+  AuthorizationTitle,
+} from "../../Authorization/styles";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
 import VisibilityOffTwoToneIcon from "@mui/icons-material/VisibilityOffTwoTone";
 import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
@@ -8,14 +11,21 @@ import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
 import FindInPageTwoToneIcon from "@mui/icons-material/FindInPageTwoTone";
 import LocalPhoneTwoToneIcon from "@mui/icons-material/LocalPhoneTwoTone";
 import { RegistrationCompanyPaper } from "./styles";
+import { companyRegisterAsync } from "../registrationSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 export default function RegistrationCompany() {
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   const [company, setCompany] = useState({
-    companyName: "",
-    companyEmail: "",
-    companyPassword1: "",
-    companyPassword2: "",
-    companyDoc: "",
-    companyPhone_number: "",
+    username: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    phone_number: "",
+    doc: "",
   });
   console.log("company: ", company);
   const [passwordError, setPasswordError] = useState(false);
@@ -29,16 +39,47 @@ export default function RegistrationCompany() {
       [name]: value,
     }));
 
-    if (name === "companyPassword2" && value === "") {
+    if (name === "confirm_password" && value === "") {
       setPasswordError(false);
     }
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (company.companyPassword1 !== company.companyPassword2) {
-      console.log("Пароли не совпадают!");
+
+    if (
+      !company.username ||
+      !company.email ||
+      !company.password ||
+      !company.confirm_password ||
+      !company.phone_number ||
+      !company.doc
+    ) {
+      alert("Все поля должны быть заполнены");
+      return;
+    }
+
+    if (company.password !== company.confirm_password) {
+      console.log("Пароли не совпадают");
       setPasswordError(true);
       return;
+    }
+
+    try {
+      await dispatch(
+        companyRegisterAsync({
+          username: company.username,
+          email: company.email,
+          password: company.password,
+          confirm_password: company.confirm_password,
+          phone_number: company.phone_number,
+          doc: company.doc,
+        })
+      );
+
+      navigate("/");
+    } catch (error) {
+      console.log("error: ", error);
     }
   };
 
@@ -49,9 +90,9 @@ export default function RegistrationCompany() {
         <TextField
           margin="dense"
           required
-          name="companyName"
+          name="username"
           placeholder="Название Компании"
-          value={company.companyName}
+          value={company.username}
           autoComplete="on"
           onChange={handleInputChange}
           InputProps={{
@@ -65,9 +106,9 @@ export default function RegistrationCompany() {
         <TextField
           margin="dense"
           required
-          name="companyDoc"
+          name="doc"
           placeholder="Doc"
-          value={company.companyDoc}
+          value={company.doc}
           autoComplete="on"
           onChange={handleInputChange}
           InputProps={{
@@ -81,9 +122,9 @@ export default function RegistrationCompany() {
         <TextField
           margin="dense"
           required
-          name="companyPhone_number"
+          name="phone_number"
           placeholder="Номер Компании"
-          value={company.companyPhone_number}
+          value={company.phone_number}
           autoComplete="on"
           onChange={handleInputChange}
           InputProps={{
@@ -97,10 +138,10 @@ export default function RegistrationCompany() {
         <TextField
           margin="dense"
           required
-          name="companyEmail"
+          name="email"
           type="email"
           placeholder="Элеткронная почта"
-          value={company.companyEmail}
+          value={company.email}
           autoComplete="on"
           onChange={handleInputChange}
           InputProps={{
@@ -115,8 +156,8 @@ export default function RegistrationCompany() {
           margin="dense"
           placeholder="Пароль"
           type={showPassword ? "text" : "password"}
-          name="companyPassword1"
-          value={company.companyPassword1}
+          name="password"
+          value={company.password}
           onChange={handleInputChange}
           required
           InputProps={{
@@ -141,9 +182,9 @@ export default function RegistrationCompany() {
           error={passwordError}
           onChange={handleInputChange}
           placeholder="Повторите пароль"
-          name="companyPassword2"
+          name="confirm_password"
           className={passwordError ? "error" : ""}
-          value={company.companyPassword2}
+          value={company.confirm_password}
           type={showConfirmPassword ? "text" : "password"}
           helperText={passwordError && "Пароли не совпадают"}
           InputProps={{

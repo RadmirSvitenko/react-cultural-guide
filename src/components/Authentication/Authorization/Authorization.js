@@ -10,17 +10,15 @@ import {
   LinkText,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { authSelectors, loginAsync } from "./AuthorizationSlice";
+import { useDispatch } from "react-redux";
+import { loginAsync } from "./AuthorizationSlice";
 
 export default function Authorization() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const isLoading = useSelector(authSelectors.isLoading);
-
   const [user, setUser] = useState({
-    email: "user@mail.com",
+    email: "cbaiel@mail.ru",
     password: "begemot2505",
   });
 

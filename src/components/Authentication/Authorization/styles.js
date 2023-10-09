@@ -1,4 +1,5 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
+import { Form } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "theme";
 
@@ -20,7 +21,7 @@ export const AuthorizationPaper = styled(Paper)(() => ({
     padding: "0px",
   },
 }));
-export const AuthorizationForm = styled(Box)(() => ({
+export const AuthorizationForm = styled(Form)(() => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",

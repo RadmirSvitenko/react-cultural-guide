@@ -11,7 +11,7 @@ export async function login(data) {
 
 export async function getUser() {
   try {
-    const response = await API.get("/profile/");
+    const response = await API.get("/users/");
     return response.data;
   } catch (error) {
     console.log("error: ", error);
