@@ -19,22 +19,17 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import API from "requester";
-import {
-  ProfileBox,
-  ProfileDisplayBox,
-  ProfilePaper,
-  ProfileTypography,
-} from "pages/ProfilePage/styles";
+import { ProfileBox, ProfileDisplayBox } from "pages/ProfilePage/styles";
 import { updateUserDetails } from "pages/ProfilePage/ProfileSlice";
 import { EditGrid, EditPaper } from "./styles";
 
-function EditProfileModal({ onClose }) {
+function EditProfileModal({ onClose, open }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.userData.currentUser);
   const [updatedUserData, setUpdatedUserData] = useState(currentUser);
-
+  const [selectedFile, setSelectedFile] = useState(null);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUpdatedUserData((prevData) => ({
@@ -45,10 +40,7 @@ function EditProfileModal({ onClose }) {
 
   const handlePhotoUpload = (event) => {
     const file = event.target.files[0];
-    setUpdatedUserData((prevData) => ({
-      ...prevData,
-      photo: file,
-    }));
+    setSelectedFile(file);
   };
 
   const formatDate = (dateString) => {
@@ -62,6 +54,7 @@ function EditProfileModal({ onClose }) {
 
     return `${year}-${month}-${day}`;
   };
+
   const handleUpdateProfile = async () => {
     try {
       const formData = new FormData();
@@ -72,18 +65,18 @@ function EditProfileModal({ onClose }) {
       formData.append("phone_number", updatedUserData.phone_number);
       formData.append("gender", updatedUserData.gender);
       formData.append("date_of_birth", updatedUserData.date_of_birth);
-      if (updatedUserData.photo) {
-        formData.append("photo", updatedUserData.photo);
+      if (selectedFile) {
+        formData.append("photo", selectedFile);
       }
 
       const response = await API.put(`/profile/`, formData, {
+        multi: "true",
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       const updatedData = response.data;
       dispatch(updateUserDetails({ ...currentUser, ...updatedData }));
-      onClose();
       console.log("Обновленные данные:", updatedData);
       onClose();
     } catch (error) {
@@ -103,7 +96,7 @@ function EditProfileModal({ onClose }) {
     bgcolor: "background.paper",
   };
   return (
-    <ProfileBox>
+    <ProfileBox open={open} onClose={onClose}>
       <EditPaper elevation={20}>
         <ProfileDisplayBox>
           <Box
@@ -114,12 +107,16 @@ function EditProfileModal({ onClose }) {
             }}
           >
             <img
+              defaultValue="https://www.roiconnect.ca/wp-content/uploads/2021/07/DefaultAvatar.png"
               style={{
                 maxWidth: "100%",
                 width: "100%",
                 borderRadius: "100%",
               }}
-              src={updatedUserData.photo}
+              src={
+                updatedUserData.photo ||
+                "https://www.roiconnect.ca/wp-content/uploads/2021/07/DefaultAvatar.png"
+              }
               alt="User"
             />
             <IconButton
@@ -133,7 +130,7 @@ function EditProfileModal({ onClose }) {
                 background: "white",
               }}
             >
-              <EditIcon />
+              <AddAPhotoIcon />
               <Input
                 type="file"
                 accept="image/*"

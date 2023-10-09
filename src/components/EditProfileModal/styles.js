@@ -17,4 +17,5 @@ export const EditPaper = styled(Paper)(() => ({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
+  height: "70%",
 }));
