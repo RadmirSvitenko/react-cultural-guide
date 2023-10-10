@@ -77,7 +77,7 @@ export default function RegistrationCompany() {
         })
       );
 
-      navigate("/");
+      navigate("/posts");
     } catch (error) {
       console.log("error: ", error);
     }

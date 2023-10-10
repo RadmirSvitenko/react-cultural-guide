@@ -3,10 +3,7 @@ import {
   PostBoxButtonBox,
   PostBoxContent,
   PostBoxContentBox,
-  PostBoxContentList,
-  PostBoxContentListItem,
   PostBoxFunctionBox,
-  PostBoxFunctionButton,
   PostBoxRatingBox,
   PostBoxRatingTitle,
   PostBoxTitle,
@@ -15,30 +12,15 @@ import {
   PostCollapseContentBox,
   PostCollapseTitle,
   PostsPageAllPostsBox,
-  PostsPageFilterContainer,
   PostsPageMainConteiner,
   PostsPagePostBox,
 } from "./styles";
-import {
-  Button,
-  Grid,
-  IconButton,
-  ListItem,
-  ListItemText,
-  Rating,
-  Typography,
-} from "@mui/material";
+import { Button, ListItem, ListItemText } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
-import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
-import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
-import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRounded";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostsList } from "reducers/postsSlice";
-import { Navigate, useNavigate } from "react-router-dom";
-import { theme } from "theme";
-import { Box } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 
 const Posts = () => {
   const [favoriteIcon, setFavoriteIcon] = useState(false);
@@ -64,7 +46,7 @@ const Posts = () => {
   }, []);
 
   const toDetailsPost = (post) => {
-    navigate(`/${post.id}`);
+    navigate(`/posts/${post.id}`);
   };
 
   useEffect(() => {
@@ -100,24 +82,8 @@ const Posts = () => {
 
               <PostBoxFunctionBox>
                 <PostBoxRatingBox>
-                  <Rating value={5} />
-                  <IconButton onClick={handleChangeIconFavorite}>
-                    {favoriteIcon ? (
-                      <FavoriteRoundedIcon color="error" />
-                    ) : (
-                      <FavoriteBorderRoundedIcon color="error" />
-                    )}
-                  </IconButton>
-
                   <PostBoxRatingTitle>
-                    <IconButton>
-                      <RemoveRedEyeIcon
-                        fontSize="small"
-                        sx={{
-                          color: "#fff",
-                        }}
-                      />
-                    </IconButton>
+                    <RemoveRedEyeIcon />
                     {post.views}
                   </PostBoxRatingTitle>
                 </PostBoxRatingBox>
@@ -134,16 +100,12 @@ const Posts = () => {
 
                     <PostCollapseContentBox>
                       <Button
-                        sx={{ margin: "5px 0px" }}
+                        sx={{
+                          margin: "5px 0px",
+                          background: "#457fca",
+                          color: "white",
+                        }}
                         variant="contained"
-                        color="success"
-                      >
-                        Я пойду!
-                      </Button>
-                      <Button
-                        sx={{ margin: "5px 0px" }}
-                        variant="contained"
-                        color="warning"
                         onClick={() => toDetailsPost(post)}
                       >
                         Подробнее

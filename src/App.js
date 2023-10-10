@@ -1,10 +1,7 @@
-import Authorization from "components/Authentication/Authorization/Authorization";
 import {
   authSelectors,
   getUserAsync,
 } from "components/Authentication/Authorization/AuthorizationSlice";
-import RegistrationCompany from "components/Authentication/Registration/RegistrationCompany/RegistrationCompany";
-import RegistrationUser from "components/Authentication/Registration/RegistrationUser/RegistrationUser";
 import { getTokenFromCookies } from "cookies";
 import { AuthProvider } from "providers/authProvider/AuthProvider";
 import { useEffect } from "react";
@@ -18,6 +15,7 @@ import store from "store";
 import { theme } from "theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Profile from "pages/ProfilePage/Profile";
+import LoginPage from "pages/LoginPage/LoginPage";
 
 function App() {
   const user = useSelector(authSelectors.user);
@@ -36,15 +34,10 @@ function App() {
           <CssBaseline />
           <AuthProvider>
             <Routes>
-              <Route path="/authorization" element={<Authorization />} />
-              <Route path="/registration-user" element={<RegistrationUser />} />
-              <Route
-                path="/registration-company"
-                element={<RegistrationCompany />}
-              />
+              <Route path="/" element={<LoginPage />} />
               <Route element={<MainLayouts />}>
-                <Route path="/" element={<Posts />} />
-                <Route path="/:id" element={<PostDetails />} />
+                <Route path="posts" element={<Posts />} />
+                <Route path="posts/:id" element={<PostDetails />} />
                 <Route path="/profile/" element={<Profile />} />
               </Route>
             </Routes>

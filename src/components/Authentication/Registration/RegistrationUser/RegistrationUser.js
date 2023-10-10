@@ -75,21 +75,18 @@ const RegistrationUser = () => {
         })
       );
 
-      navigate("/");
+      navigate("/posts");
     } catch (error) {
       console.log("error: ", error);
     }
   };
 
-  const handleNavigateToCompanyRegistration = () => {
-    navigate("/registration-company");
-  };
-
   return (
     <AuthorizationBox>
-      <RegistrationPaper elevation={20}>
+      <RegistrationPaper elevation={0}>
         <AuthorizationTitle>Регистрация</AuthorizationTitle>
         <TextField
+          margin="dense"
           required
           name="username"
           placeholder="Ник"
@@ -105,6 +102,7 @@ const RegistrationUser = () => {
           }}
         />
         <TextField
+          margin="dense"
           required
           name="email"
           type="email"
@@ -121,6 +119,7 @@ const RegistrationUser = () => {
           }}
         />
         <TextField
+          margin="dense"
           required
           placeholder="Пароль"
           type={showPassword ? "text" : "password"}
@@ -146,6 +145,7 @@ const RegistrationUser = () => {
         />
 
         <TextField
+          margin="dense"
           required
           error={passwordError}
           onChange={handleInputChange}
@@ -174,16 +174,15 @@ const RegistrationUser = () => {
         />
 
         <LoadingButton
+          sx={{
+            margin: "20px 0px",
+          }}
           variant="contained"
           loading={isRegisterLoading}
           onClick={handleSubmit}
         >
           Registration
         </LoadingButton>
-
-        <LinkText onClick={handleNavigateToCompanyRegistration}>
-          Вы компания?
-        </LinkText>
       </RegistrationPaper>
     </AuthorizationBox>
   );

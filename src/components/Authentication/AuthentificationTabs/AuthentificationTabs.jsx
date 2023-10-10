@@ -40,7 +40,12 @@ const AuthentificationTabs = () => {
   };
   return (
     <Box>
-      <Box sx={{ maxWidth: { xs: 320, sm: 480 }, bgcolor: "background.paper" }}>
+      <Box
+        sx={{
+          maxWidth: { xs: 320, sm: 480 },
+          bgcolor: "background.paper",
+        }}
+      >
         <Tabs
           value={AuthTabValue}
           onChange={handleChangeAuthTabs}

@@ -1,4 +1,4 @@
-import { Button, Grid, List, ListItem, Paper } from "@mui/material";
+import { Button, Grid, List } from "@mui/material";
 import { Box } from "@mui/system";
 import styled from "styled-components";
 import { theme } from "theme";
@@ -11,7 +11,7 @@ export const PostsPageMainConteiner = styled(Grid)(() => ({
   alignItems: "center",
   display: "flex",
   padding: "100px",
-  background: theme.palette.primary.secondary,
+  background: "#ebeff2",
 }));
 
 export const PostsPageFilterContainer = styled(Box)(() => ({
@@ -32,7 +32,6 @@ export const PostsPageFilterContainer = styled(Box)(() => ({
   background: "#202020",
   ":hover": {
     width: "400px",
-    background: "#fff",
     transition: "0.5s",
   },
 }));
@@ -51,12 +50,11 @@ export const PostsPagePostBox = styled(Box)(() => ({
   height: "auto",
   display: "flex",
   flexDirection: "column",
-  outline: "3px solid #ef6c00",
-  borderRadius: "25px",
+  borderRadius: "10px",
   padding: "15px",
-  background: "#101010",
+  background: "#fff",
   [theme.breakpoints.down("sm")]: {
-    height: "700px",
+    height: "500px",
     paddingBottom: "50px",
   },
 }));
@@ -69,9 +67,8 @@ export const PostBoxTitleBox = styled(Box)(() => ({
 
 export const PostBoxTitle = styled(Box)(() => ({
   fontFamily: theme.fonts.Nunito,
-  fontSize: "16px",
+  fontSize: "17px",
   fontWeight: "bold",
-  color: "#fff",
 }));
 
 export const PostBoxRatingBox = styled(Box)(() => ({
@@ -79,17 +76,18 @@ export const PostBoxRatingBox = styled(Box)(() => ({
   width: "100%",
   justifyContent: "space-evenly",
   alignItems: "center",
-  outline: "1px solid #ef6c00",
   borderRadius: "15px",
 }));
 
 export const PostBoxRatingTitle = styled(Box)(() => ({
   fontFamily: theme.fonts.Nunito,
   fontSize: "16px",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
   fontWeight: "bold",
   textTransform: "uppercase",
   letterSpacing: "1px",
-  color: "#fff",
 }));
 
 export const PostBoxButtonBox = styled(Box)(() => ({
@@ -104,13 +102,13 @@ export const PostBoxContentBox = styled(Box)(() => ({
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  minHeight: "300px",
+  minHeight: "200px",
   height: "auto",
-  outline: "1px solid #ef6c00",
+  outline: "1px solid black",
   borderRadius: "15px",
-  margin: "50px 0px",
+  margin: "30px 0px",
   [theme.breakpoints.down("sm")]: {
-    margin: "100px 0px",
+    margin: "50px 0px",
   },
 }));
 
@@ -120,7 +118,6 @@ export const PostBoxContent = styled(List)(() => ({
   minHeight: "200px",
   fontSize: "16px",
   fontWeight: "800",
-  color: "#fff",
 }));
 
 export const PostBoxFunctionBox = styled(Box)(() => ({
@@ -163,6 +160,5 @@ export const PostCollapseContentBox = styled(Grid)(() => ({
 export const PostCollapseTitle = styled(Box)(() => ({
   fontFamily: theme.fonts.Nunito,
   fontSize: "18px",
-  fontWeight: "800",
-  color: "#fff",
+  fontWeight: "700",
 }));

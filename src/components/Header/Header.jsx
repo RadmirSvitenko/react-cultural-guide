@@ -4,21 +4,9 @@ import {
   LogoText,
   MenuButton,
   MyHeader,
-  NavMenu,
-  SearchBar,
-  NavLink,
-  CustomNavLink,
   SearchField,
 } from "./styles";
-import {
-  Badge,
-  Box,
-  IconButton,
-  InputAdornment,
-  Menu,
-  MenuItem,
-  TextField,
-} from "@mui/material";
+import { Box, IconButton, Menu, MenuItem } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -27,18 +15,15 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Favorite from "components/Favorite/Favorite";
 import AddEvent from "components/AddEvent/AddEvent";
-import { display } from "@mui/system";
 import { theme } from "theme";
-import ModalAuth from "components/ModalAuth/ModalAuth";
 import { useDispatch } from "react-redux";
-import { getPostsList, serchPostsByPostList } from "reducers/postsSlice";
+import { getPostsList } from "reducers/postsSlice";
 import { useNavigate } from "react-router";
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const [openModalFavorite, setOpenModalFavorite] = useState(false);
   const [openModalAddEvent, setOpenModalAddEvent] = useState(false);
-  const [openModalAuth, setOpenModalAuth] = useState(false);
   const [selectedLang, setSelectedLang] = useState("ru");
   const [openMenu, setOpenMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -56,9 +41,12 @@ const Header = () => {
   };
 
   const handleNavigateMainPage = () => {
-    navigate("/");
+    navigate("/posts");
   };
 
+  const handleNavigateProfile = () => {
+    navigate("/profile");
+  };
   const handleLangChange = (language) => {
     setSelectedLang(language);
     i18n.changeLanguage(language);
@@ -87,10 +75,6 @@ const Header = () => {
     setOpenModalAddEvent((open) => !open);
   };
 
-  const toggleModalAuth = () => {
-    setOpenModalAuth((open) => !open);
-  };
-
   return (
     <HeaderAppBar>
       <MyHeader>
@@ -100,17 +84,13 @@ const Header = () => {
         <LogoText onClick={handleNavigateMainPage} variant="h6">
           {t("toGo")}
         </LogoText>
-        <NavMenu>
-          <CustomNavLink>{t("aboutUs")}</CustomNavLink>
-          <CustomNavLink>{t("contacts")}</CustomNavLink>
-        </NavMenu>
 
         <form onSubmit={handleSearchSubmit}>
           <SearchField
-            label="Поиск постов..."
             value={searchValue}
             onChange={handleSearch}
             variant="outlined"
+            placeholder="Поиск"
             InputProps={{
               endAdornment: (
                 <IconButton
@@ -135,7 +115,7 @@ const Header = () => {
           <IconButton onClick={toggleModalFavorite}>
             <FavoriteIcon sx={{ color: "white" }} />
           </IconButton>
-          <IconButton onClick={toggleModalAuth}>
+          <IconButton onClick={handleNavigateProfile}>
             <AccountCircleIcon sx={{ color: "white" }} />
           </IconButton>
           <IconButton onClick={toggleModalAddEvent}>
@@ -165,7 +145,6 @@ const Header = () => {
 
       <Favorite open={openModalFavorite} onClose={toggleModalFavorite} />
       <AddEvent open={openModalAddEvent} onClose={toggleModalAddEvent} />
-      <ModalAuth open={openModalAuth} onClose={toggleModalAuth} />
     </HeaderAppBar>
   );
 };

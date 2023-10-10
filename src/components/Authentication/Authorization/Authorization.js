@@ -3,11 +3,9 @@ import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
 import VpnKeyTwoToneIcon from "@mui/icons-material/VpnKeyTwoTone";
 import React, { useState } from "react";
 import {
-  AuthorizationBox,
   AuthorizationButton,
   AuthorizationPaper,
   AuthorizationTitle,
-  LinkText,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -29,20 +27,17 @@ export default function Authorization() {
       [name]: value,
     }));
   };
-  const handleNavigateToRegistration = () => {
-    navigate("/registration-user");
-  };
+
   const login = async () => {
     try {
       await dispatch(loginAsync(user));
-      navigate("/");
+      navigate("/posts");
     } catch (error) {
       console.log("error: ", error);
     }
   };
 
   return (
-    // <AuthorizationBox>
     <AuthorizationPaper elevation={0}>
       <AuthorizationTitle>Авторизация </AuthorizationTitle>
       <TextField
@@ -89,15 +84,6 @@ export default function Authorization() {
       >
         Login
       </AuthorizationButton>
-      {/* <Box>
-          <Typography sx={{ color: "gray", fontSize: "15px" }}>
-            Не зарегестрированы?
-          </Typography>
-          <LinkText onClick={handleNavigateToRegistration}>
-            Регистрация
-          </LinkText>
-        </Box> */}
     </AuthorizationPaper>
-    // </AuthorizationBox>
   );
 }
