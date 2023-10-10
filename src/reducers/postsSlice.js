@@ -9,7 +9,16 @@ const initialState = {
 export const getPostsList = createAsyncThunk(
   "getPostsList/get",
   async (params) => {
-    const response = await API.get(`ev/events/`, { params });
+    const response = await API.get(`ev/events/`, { params: params });
+    return response.data;
+  }
+);
+
+export const getPostsCategory = createAsyncThunk(
+  "getPostsCategory/get",
+  async (params) => {
+    const response = await API.get(`ev/category/${params.id}`);
+    console.log("category", response.data);
     return response.data;
   }
 );
@@ -34,6 +43,7 @@ export const addPost = createAsyncThunk("addPostsList/post", async (params) => {
     time_end: params.time_end,
     priority: params.priority,
     geolocation_name: params.geolocation_name,
+    category__titles: params.category__titles,
     organizer: params.organizer,
 
     multi: true,

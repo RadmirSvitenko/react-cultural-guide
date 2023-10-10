@@ -22,6 +22,7 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -33,12 +34,14 @@ import ModalAuth from "components/ModalAuth/ModalAuth";
 import { useDispatch } from "react-redux";
 import { getPostsList, serchPostsByPostList } from "reducers/postsSlice";
 import { useNavigate } from "react-router";
+import AppDrawer from "components/Drawer/Drawer";
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const [openModalFavorite, setOpenModalFavorite] = useState(false);
   const [openModalAddEvent, setOpenModalAddEvent] = useState(false);
   const [openModalAuth, setOpenModalAuth] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedLang, setSelectedLang] = useState("ru");
   const [openMenu, setOpenMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -91,19 +94,20 @@ const Header = () => {
     setOpenModalAuth((open) => !open);
   };
 
+  const toggleModalDrawer = () => {
+    setOpenDrawer((open) => !open);
+  };
+
   return (
     <HeaderAppBar>
       <MyHeader>
-        <MenuButton open={openMenu} onClick={toggleMenu}>
-          <Menu />
-        </MenuButton>
         <LogoText onClick={handleNavigateMainPage} variant="h6">
           {t("toGo")}
         </LogoText>
-        <NavMenu>
+        {/* <NavMenu>
           <CustomNavLink>{t("aboutUs")}</CustomNavLink>
           <CustomNavLink>{t("contacts")}</CustomNavLink>
-        </NavMenu>
+        </NavMenu> */}
 
         <form onSubmit={handleSearchSubmit}>
           <SearchField
@@ -135,11 +139,17 @@ const Header = () => {
           <IconButton onClick={toggleModalFavorite}>
             <FavoriteIcon sx={{ color: "white" }} />
           </IconButton>
+
           <IconButton onClick={toggleModalAuth}>
             <AccountCircleIcon sx={{ color: "white" }} />
           </IconButton>
+
           <IconButton onClick={toggleModalAddEvent}>
             <AddCircleIcon sx={{ color: "white" }} />
+          </IconButton>
+
+          <IconButton onClick={toggleModalDrawer}>
+            <MenuOpenRoundedIcon sx={{ color: "white" }} />
           </IconButton>
         </Box>
         <Menu
@@ -166,6 +176,7 @@ const Header = () => {
       <Favorite open={openModalFavorite} onClose={toggleModalFavorite} />
       <AddEvent open={openModalAddEvent} onClose={toggleModalAddEvent} />
       <ModalAuth open={openModalAuth} onClose={toggleModalAuth} />
+      <AppDrawer open={openDrawer} onClose={toggleModalDrawer} />
     </HeaderAppBar>
   );
 };

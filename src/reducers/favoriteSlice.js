@@ -10,6 +10,7 @@ export const getFavoriteList = createAsyncThunk(
   "getFavoriteList/get",
   async () => {
     const response = await API.get("favourites/");
+    console.log("redux favorite", response.data);
     return response.data;
   }
 );
@@ -17,14 +18,8 @@ export const getFavoriteList = createAsyncThunk(
 export const postFavoriteList = createAsyncThunk(
   "postFavoriteList/post",
   async (params) => {
-    const response = await API.post(`add_to_favourites/`, {
-      events: params.events,
-
-      multi: true,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    console.log("id: ", params.id);
+    const response = await API.post(`add_to_favourites/${params.id}/`);
     return response.data;
   }
 );

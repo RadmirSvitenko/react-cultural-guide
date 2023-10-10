@@ -45,7 +45,7 @@ const Favorite = ({ open, onClose }) => {
       </DialogTitle>
       <ModalCustomDialogContent>
         <FavoriteContainer>
-          {favotire.map(({ events }) => (
+          {favotire?.map(({ events }) => (
             <FavoritePostBox>
               <FavoritePostBoxTitle>{events.title}</FavoritePostBoxTitle>
               <FavoritePostBoxContent>

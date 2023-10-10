@@ -2,11 +2,14 @@ import {
   Button,
   Dialog,
   DialogTitle,
+  FormControl,
   Grid,
+  InputLabel,
   Menu,
   MenuItem,
   Select,
   Slide,
+  TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { ModalCustomDialogContent } from "components/Header/styles";
@@ -17,7 +20,7 @@ import {
   ModalAddEventTitle,
 } from "./styles";
 import { useDispatch } from "react-redux";
-import { addPost } from "reducers/postsSlice";
+import { addPost, getPostsList } from "reducers/postsSlice";
 import { theme } from "theme";
 
 const AddEvent = ({ open, onClose }) => {
@@ -30,6 +33,7 @@ const AddEvent = ({ open, onClose }) => {
   const [timeEndPost, setTimeEndPost] = useState("");
   const [priorityPost, setPrioretyPost] = useState("");
   const [geolocationName, setGeolocationNamePost] = useState("");
+  const [categoryTitlePost, setCategoryTitlePost] = useState("");
   const [organizerPost, setOrganizerPost] = useState(1);
 
   const dispatch = useDispatch();
@@ -46,6 +50,7 @@ const AddEvent = ({ open, onClose }) => {
       time_end: timeEndPost,
       priority: priorityPost,
       geolocation_name: geolocationName,
+      category__titles: categoryTitlePost,
       // organizer: organizerPost,
     });
   };
@@ -61,10 +66,13 @@ const AddEvent = ({ open, onClose }) => {
   const handleChangeFieldPriorety = (e) => setPrioretyPost(e.target.value);
   const handleChangeFieldGeolocationName = (e) =>
     setGeolocationNamePost(e.target.value);
+  const handleChangeFieldCategoryTitle = (e) =>
+    setCategoryTitlePost(e.target.value);
   const handleChangeFieldOrganizer = (e) => setOrganizerPost(e.target.value);
 
   const handleAddPost = (data) => {
     dispatch(addPost(data));
+    dispatch(getPostsList());
     console.log(data);
   };
 
@@ -75,9 +83,6 @@ const AddEvent = ({ open, onClose }) => {
       TransitionComponent={Slide}
       keepMounted
       maxWidth={"sm" ? "800px" : "300px"}
-      sx={{
-        zIndex: "3000",
-      }}
     >
       <DialogTitle>
         <Grid width={"100%"} display={"flex"} justifyContent={"space-between"}>
@@ -143,13 +148,13 @@ const AddEvent = ({ open, onClose }) => {
               onChange={handleChangeFieldTimeEnd}
             />
 
-            <AddEventCustomTextField
+            {/* <AddEventCustomTextField
               margin="dense"
               variant="outlined"
               label="Значимость(low/high)"
               value={priorityPost}
               onChange={handleChangeFieldPriorety}
-            />
+            /> */}
 
             <AddEventCustomTextField
               margin="dense"
@@ -159,24 +164,38 @@ const AddEvent = ({ open, onClose }) => {
               onChange={handleChangeFieldGeolocationName}
             />
 
-            <AddEventCustomTextField
+            <TextField
+              select
               margin="dense"
-              variant="outlined"
-              label="Организатор"
-              value={organizerPost}
-              type="number"
-              onChange={handleChangeFieldOrganizer}
-            />
-            {/* <Box>
-              <Select
-                onChange={handleChangeFieldPriorety}
-                value={priorityPost}
-                label="Значимость"
-              >
-                <MenuItem value="high">high</MenuItem>
-                <MenuItem value="low">low</MenuItem>
-              </Select>
-            </Box> */}
+              defaultChecked="семейное"
+              value={categoryTitlePost}
+              label="Категория"
+              onChange={handleChangeFieldCategoryTitle}
+              sx={{
+                minWidth: "200px",
+              }}
+            >
+              <MenuItem value={"семейное"}>семейное</MenuItem>
+              <MenuItem value={"концерт"}>концерт</MenuItem>
+              <MenuItem value={"развлечение"}>развлечение</MenuItem>
+              <MenuItem value={"парки"}>парки</MenuItem>
+              <MenuItem value={"прогулка"}>прогулка</MenuItem>
+            </TextField>
+
+            <TextField
+              select
+              margin="dense"
+              defaultChecked="low"
+              value={priorityPost}
+              label="Значимость"
+              onChange={handleChangeFieldPriorety}
+              sx={{
+                minWidth: "200px",
+              }}
+            >
+              <MenuItem value={"high"}>High</MenuItem>
+              <MenuItem value={"low"}>Low</MenuItem>
+            </TextField>
 
             <Button
               sx={{

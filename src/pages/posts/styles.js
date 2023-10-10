@@ -166,3 +166,12 @@ export const PostCollapseTitle = styled(Box)(() => ({
   fontWeight: "800",
   color: "#fff",
 }));
+
+export const TelegramBox = styled(Box)(() => ({
+  background: "blue",
+  borderRadius: "50%",
+  margin: "30px",
+  position: "fixed",
+  bottom: "0",
+  right: "0",
+}));

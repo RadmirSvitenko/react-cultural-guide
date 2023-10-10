@@ -18,6 +18,7 @@ import {
   PostsPageFilterContainer,
   PostsPageMainConteiner,
   PostsPagePostBox,
+  TelegramBox,
 } from "./styles";
 import {
   Button,
@@ -39,16 +40,16 @@ import { getPostsList } from "reducers/postsSlice";
 import { Navigate, useNavigate } from "react-router-dom";
 import { theme } from "theme";
 import { Box } from "@mui/system";
+import { Telegram } from "@mui/icons-material";
+import Loading from "components/Loading/Loading";
 
 const Posts = () => {
-  const [favoriteIcon, setFavoriteIcon] = useState(false);
   const [arrowIcon, setArrowIcon] = useState(false);
   const [isViewPost, setIsViewPost] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleChangeIconFavorite = () => setFavoriteIcon((show) => !show);
   const handleChangeIconArrow = () => setArrowIcon((show) => !show);
   const togglewViewDetailsPost = () => {
     setIsViewPost((show) => !show);
@@ -60,23 +61,24 @@ const Posts = () => {
   console.log("posts: ", posts);
 
   const getPosts = useCallback(async () => {
-    dispatch(getPostsList());
-  }, []);
+    await dispatch(getPostsList());
+  }, [dispatch]);
 
   const toDetailsPost = (post) => {
     navigate(`/${post.id}`);
   };
 
+  const toTelegramBot = () => {
+    navigate("/1");
+  };
+
   useEffect(() => {
     getPosts();
+    console.log("inside");
   }, [getPosts]);
 
-  if (isLoading) {
-    return <CircularProgress size={"large"} color="secondary" />;
-  }
-
-  if (isLoading || !posts) {
-    <CircularProgress />;
+  if (!posts || isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -101,12 +103,8 @@ const Posts = () => {
               <PostBoxFunctionBox>
                 <PostBoxRatingBox>
                   <Rating value={5} />
-                  <IconButton onClick={handleChangeIconFavorite}>
-                    {favoriteIcon ? (
-                      <FavoriteRoundedIcon color="error" />
-                    ) : (
-                      <FavoriteBorderRoundedIcon color="error" />
-                    )}
+                  <IconButton>
+                    <FavoriteRoundedIcon color="error" />
                   </IconButton>
 
                   <PostBoxRatingTitle>
@@ -155,6 +153,17 @@ const Posts = () => {
             </PostsPagePostBox>
           ))}
         </PostsPageAllPostsBox>
+
+        <TelegramBox onClick={() => toTelegramBot}>
+          <IconButton>
+            <Telegram
+              fontSize="large"
+              sx={{
+                color: "#fff",
+              }}
+            />
+          </IconButton>
+        </TelegramBox>
       </PostsPageMainConteiner>
     </>
   );

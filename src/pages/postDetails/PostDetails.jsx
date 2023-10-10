@@ -1,11 +1,4 @@
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-
 import {
-  ListMemberCustomList,
-  ListMemberCustomListItemText,
   PostCommentsBox,
   PostCommentsContainer,
   PostDetailsBox,
@@ -15,7 +8,6 @@ import {
   PostDetailsFunctionBox,
   PostDetailsInfo,
   PostDetailsInfoBox,
-  PostDetailsListBox,
   PostDetailsMap,
   PostDetailsTime,
   PostDetailsTimeBox,
@@ -23,16 +15,7 @@ import {
   PostDetailsTitleBox,
 } from "./styles";
 
-import {
-  Button,
-  IconButton,
-  Rating,
-  TextField,
-  Typography,
-} from "@mui/material";
-import MessageIcon from "@mui/icons-material/Message";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import CommentIcon from "@mui/icons-material/Comment";
+import { Button, Rating, TextField } from "@mui/material";
 import { theme } from "theme";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,14 +28,14 @@ import {
 } from "reducers/postDetailsSlice";
 import { useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
-import { title } from "process";
-import { async } from "q";
 import { getFavoriteList, postFavoriteList } from "reducers/favoriteSlice";
+import Loading from "components/Loading/Loading";
 
 export default function CheckboxListSecondary() {
   const [commentValue, setCommentValue] = useState();
   const [currentTime, setCurrentTime] = useState();
   const post = useSelector((state) => state.post.post);
+  const isLoading = useSelector((state) => state.post.isLoading);
   const meeting = useSelector((state) => state.post.meeting);
   const user = useSelector((state) => state.auth.user);
   const comment = useSelector((state) => state.post.comment);
@@ -62,20 +45,21 @@ export default function CheckboxListSecondary() {
   console.log("meeting: ", meeting);
   console.log("user: ", user);
 
-  const getNowTimePhone = () => {
-    setInterval(() => {
-      let date = new Date();
-      let time = date.toLocaleTimeString();
-      console.log("time: ", time);
+  const displayTime = () => {
+    let currentTime = new Date();
+    let hours = currentTime.getHours();
+    let minutes = currentTime.getMinutes();
+    let seconds = currentTime.getSeconds();
 
-      setCurrentTime(time);
-    }, 1000);
+    hours = (hours < 10 ? "0" : "") + hours;
+    minutes = (minutes < 10 ? "0" : "") + minutes;
+    seconds = (seconds < 10 ? "0" : "") + seconds;
+
+    let time = hours + ":" + minutes + ":" + seconds;
+    setCurrentTime(time);
   };
 
-  // const date = new Date();
-
-  // // const time = setInterval(date.toLocaleTimeString(), 1000);
-  // const time = date.toLocaleTimeString();
+  // setInterval(displayTime, 1000);
 
   const dispatch = useDispatch();
 
@@ -102,10 +86,6 @@ export default function CheckboxListSecondary() {
     );
   };
 
-  // const handleAddComment = (id, title) => {
-  //   dispatch(addCommentPostDetails({ id: id, title: title }));
-  // };
-
   const handleChangeSubmitComment = (e, id, value) => {
     console.log("value: ", value);
     console.log("id: ", id);
@@ -123,10 +103,10 @@ export default function CheckboxListSecondary() {
     await dispatch(getMeetingDetails());
   }, []);
 
-  const handleAddFavoriteEvent = async (post) => {
+  const handleAddFavoriteEvent = async (id) => {
     dispatch(
       postFavoriteList({
-        events: post,
+        id: id,
       })
     );
     await dispatch(getFavoriteList());
@@ -143,6 +123,10 @@ export default function CheckboxListSecondary() {
   useEffect(() => {
     handleGetComments();
   }, []);
+
+  if (isLoading || !post) {
+    return <Loading />;
+  }
 
   return (
     <PostDetailsContainer>
@@ -164,7 +148,7 @@ export default function CheckboxListSecondary() {
           </PostDetailsTimeBox>
 
           <PostDetailsInfoBox>
-            <PostDetailsInfo>Организатор: {post.organizer}</PostDetailsInfo>
+            <PostDetailsInfo>ID поста: {post.organizer}</PostDetailsInfo>
             <PostDetailsInfo>
               Где пройдёт: {post.geolocation_name}
             </PostDetailsInfo>
@@ -188,7 +172,7 @@ export default function CheckboxListSecondary() {
             <Button
               variant="contained"
               color="warning"
-              onClick={() => handleAddFavoriteEvent(post)}
+              onClick={() => handleAddFavoriteEvent(post.id)}
             >
               Добавить в избранное
             </Button>
